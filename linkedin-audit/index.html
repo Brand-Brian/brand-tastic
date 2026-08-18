@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkedIn Audit Suite — Brand-Tastic</title>
+  <meta name="description" content="5 AI-powered audits that show you exactly what the market sees when they land on your LinkedIn profile — and the specific fixes to turn it into an inbound machine." />
+  <meta property="og:title" content="LinkedIn Audit Suite — Brand-Tastic" />
+  <meta property="og:description" content="Your LinkedIn profile is costing you money. Find out exactly why — and fix it in one session." />
+  <meta property="og:url" content="https://brand-tastic.ca/linkedin-audit" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { background: #0A0A0A; color: #F0EBE3; font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+    #root { min-height: 100vh; }
+    input, textarea, button { font-family: 'Montserrat', sans-serif; }
+    input:focus, textarea:focus { outline: none; border-color: #EF9F27 !important; }
+    textarea { resize: vertical; }
+    ::placeholder { color: #2E2B28; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes fadeUp  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+
+    .fade-up  { animation: fadeUp  0.55s ease both; }
+    .fade-in  { animation: fadeIn  0.4s  ease both; }
+
+    .module-card:hover            { background: #161616 !important; border-color: #333 !important; }
+    .module-card.done:hover       { border-color: #FAC775 !important; }
+
+    .btn-primary {
+      background: #EF9F27; color: #0A0A0A; border: none;
+      border-radius: 8px; padding: 14px 24px; font-size: 15px;
+      font-weight: 600; cursor: pointer; letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.1s; width: 100%;
+    }
+    .btn-primary:hover   { background: #FAC775; }
+    .btn-primary:active  { transform: scale(0.99); }
+    .btn-primary:disabled { background: #2E2B28; color: #4A4540; cursor: not-allowed; }
+
+    .btn-ghost {
+      background: none; border: 1px solid #222; color: #6B6560;
+      border-radius: 8px; padding: 12px 24px; font-size: 13px;
+      cursor: pointer; width: 100%;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: #333; color: #F0EBE3; }
+
+    .field-input {
+      width: 100%; background: #0A0A0A; border: 1px solid #222;
+      border-radius: 8px; padding: 12px 14px; color: #F0EBE3;
+      font-size: 14px; font-family: 'Montserrat', sans-serif;
+      line-height: 1.6; transition: border-color 0.2s;
+    }
+    .field-input:hover { border-color: #333; }
+    a { color: inherit; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+
+    const C = {
+      bg: "#0A0A0A", surface: "#111111", border: "#222222",
+      amber: "#EF9F27", gold: "#FAC775", legacyGold: "#C9A252",
+      text: "#F0EBE3", muted: "#6B6560", dim: "#2E2B28",
+    };
+
+    const FRACTIONAL_NOTE = "CRITICAL RULES — NEVER BREAK THESE: (1) Only work with what the user has actually told you. Never invent experience, credentials, results, or expertise they did not mention. If they did not say it, do not write it. Suggesting they claim things they have not done is a hallucination and destroys trust. (2) Do NOT push them toward a single vertical or industry niche. Many professionals — especially fractional executives, consultants, and generalists — operate across multiple industries by design. Cross-industry range is a feature, not a problem to fix. (3) Do NOT push AI experience or qualifications unless the user specifically mentioned them. Not everyone is an AI practitioner. (4) Fixes must be implementable with what they actually have — their real experience, real wins, real skills.";
+
+    const MODULES = [
+      {
+        id: 1, num: "01", title: "Brand Audit",
+        full: "Audit Your Personal Brand",
+        tagline: "See what the market actually sees when they land on your profile",
+        inputs: [
+          { id: "bio",      label: "Your current LinkedIn bio or About section",     type: "textarea", rows: 5, placeholder: "Paste your current bio or any profile text. Even a rough version works." },
+          { id: "audience", label: "Your target audience",                           type: "text",     placeholder: "e.g. Growth-stage CEOs, Series A founders, mid-market operators..." },
+          { id: "outcome",  label: "The one outcome you want your profile to drive", type: "text",     placeholder: "e.g. inbound fractional CMO retainers, consulting inquiries..." },
+          { id: "strength", label: "What expertise or service do you most want to be known for?", type: "text", placeholder: "e.g. building marketing infrastructure, GTM strategy, content systems, brand positioning..." },
+        ],
+        systemPrompt: (inputs, ctx, name) => `You are a direct personal brand strategist. Analyse this profile from the market's perspective. Name problems specifically. Give fixes for today. ${FRACTIONAL_NOTE}\n\nUser: ${name}. Audience: ${inputs.audience}. Goal: ${inputs.outcome}. Core expertise to lead with: ${inputs.strength}.\n\nProfile: ${inputs.bio}\n\nUse exactly these ## headers (3-4 punchy lines each):\n## What The Market Sees\n## The Gap\n## What's Working Against You\n## Fix These Today`,
+      },
+      {
+        id: 2, num: "02", title: "Magnetic Headline",
+        full: "Write Your Magnetic Headline",
+        tagline: "Make your first 10 words do more work than most people's entire summary",
+        inputs: [
+          { id: "headline", label: "Your current LinkedIn headline (the line under your name)", type: "text", placeholder: "e.g. Fractional CMO | AI Brand Strategist | Building commercial engines..." },
+        ],
+        systemPrompt: (inputs, ctx, name) => `You are a LinkedIn positioning specialist. ${FRACTIONAL_NOTE}\n\nUser: ${name}. Audience: ${ctx.audience}. Goal: ${ctx.outcome}. Core expertise to lead with: ${ctx.strength || "not specified"}.\nCurrent headline: ${inputs.headline}\n\nUse exactly these ## headers:\n## What This Headline Signals\n## The Gap\n## Three Headline Options\n(Authority-led, Outcome-led, Curiosity-led. Each under 220 chars. Lead with their stated expertise: ${ctx.strength || "their actual experience"}. Do not invent experience they did not mention.)\n## Use This One First`,
+      },
+      {
+        id: 3, num: "03", title: "Summary Story",
+        full: "Rewrite Your Summary as a Story",
+        tagline: "Turn your About section from a resume into a reason to reach out",
+        inputs: [
+          { id: "win", label: "Your single biggest professional win — be specific",  type: "textarea", rows: 3, placeholder: "e.g. Built a GTM engine that took a sports travel company from zero to 6 partnership deals in 12 months..." },
+          { id: "cta", label: "What's the one action you want readers to take?",     type: "text",     placeholder: "e.g. book a discovery call, DM me about a fractional engagement..." },
+        ],
+        systemPrompt: (inputs, ctx, name) => `You are a narrative brand writer. ${FRACTIONAL_NOTE}\n\nThe diagnosis is already done — skip straight to the deliverable.\n\nUser: ${name}. Audience: ${ctx.audience}. Core expertise to lead with: ${ctx.strength || "their actual stated experience"}. Biggest win: ${inputs.win}. CTA: ${inputs.cta}.\nCurrent summary to replace: ${ctx.bio}\n\nUse exactly these ## headers:\n## Your New Summary\n(Full rewrite. Lead with their stated expertise. No job title opener. No "I am a..." opener. Only include experience and wins the user actually mentioned — do not invent anything. End with: ${inputs.cta}. 150-200 words.)\n## What Makes It Work\n(3-4 bullets on the specific choices and why each converts better than what they had.)`,
+      },
+      {
+        id: 4, num: "04", title: "Content Strategy",
+        full: "Build Your Content Strategy",
+        tagline: "Every post should compound trust — not just fill the feed",
+        inputs: [
+          { id: "expertise", label: "The core capability you bring to every engagement", type: "text", placeholder: "e.g. Building marketing infrastructure, AI-powered GTM, commercial execution..." },
+          { id: "frequency", label: "How often are you currently posting on LinkedIn?",  type: "text", placeholder: "e.g. once a week, rarely, daily..." },
+        ],
+        systemPrompt: (inputs, ctx, name) => `You are a content strategist for personal brands. ${FRACTIONAL_NOTE}\n\nUser: ${name}. Audience: ${ctx.audience}. Core expertise: ${ctx.strength || inputs.expertise}. Capability: ${inputs.expertise}. Frequency: ${inputs.frequency}.\n\nUse exactly these ## headers:\n## Why Your Current Posting Isn't Building Trust\n## Three Content Pillars\n(Built around their stated expertise and real experience only. No AI angle unless they mentioned it. Not industry-specific.)\n## 5 Post Ideas With Opening Lines\n(Based only on what they actually do and know. Format: Topic — Opening line)\n## Sustainable Cadence`,
+      },
+      {
+        id: 5, num: "05", title: "Inbound Machine",
+        full: "Convert Your Profile Into an Inbound Machine",
+        tagline: "Everything you've built, audited as one conversion system",
+        inputs: [],
+        systemPrompt: (inputs, ctx, name) => `You are a LinkedIn conversion strategist. ${FRACTIONAL_NOTE}\n\nThis is the final module — a pure synthesis. No new information needed. You already have everything.\n\nUser: ${name}\nHeadline: ${ctx.headline || "not yet set"}\nBio/Summary: ${ctx.bio}\nAudience: ${ctx.audience}\nGoal: ${ctx.outcome}\nBiggest win: ${ctx.win || "not yet set"}\nDesired CTA: ${ctx.cta || "not yet set"}\n\nUsing everything above, audit this profile as a complete conversion system. Use exactly these ## headers:\n## How Your Profile Works Right Now\n(Honest assessment of how headline, bio, and overall profile work together as a system — or don't. Be specific.)\n## The Conversion Gap\n(The single biggest reason a dream client lands and leaves without reaching out. Name it directly.)\n## Your Inbound Funnel\n(Step by step: what they see first, what builds trust, what creates desire, what triggers the outreach. Map it to what this person actually has.)\n## Do This First\n(The single highest-leverage change. Specific, implementable today, tied directly to ${ctx.audience} and the goal of ${ctx.outcome}.)`,
+      },
+    ];
+
+    async function runModule(mod, inputs, userName, sharedContext) {
+      const system = mod.systemPrompt(inputs, sharedContext, userName);
+      const response = await fetch("/.netlify/functions/run-module", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ system, userMessage: "Run the full analysis now." }),
+      });
+      const text = await response.text();
+      if (!text) throw new Error(`Empty response from server (HTTP ${response.status})`);
+      let data;
+      try { data = JSON.parse(text); }
+      catch (e) { throw new Error(`Server error (${response.status}): ${text.slice(0, 200)}`); }
+      if (data.error) throw new Error(data.error);
+      return data.result;
+    }
+
+    async function sendResults(lead, results) {
+      const completed = MODULES.filter(m => results[m.id]);
+      await fetch("/.netlify/functions/send-results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lead, results, modules: completed }),
+      });
+    }
+
+    function parseSections(text) {
+      const parts = text.split(/\n##\s+/).filter(Boolean);
+      if (parts.length <= 1) return [{ title: null, body: text.trim() }];
+      return parts.map(p => {
+        const nl = p.indexOf("\n");
+        if (nl === -1) return { title: p.trim(), body: "" };
+        return { title: p.slice(0, nl).trim(), body: p.slice(nl + 1).trim() };
+      });
+    }
+
+    function Eyebrow({ children }) {
+      return <div style={{ fontSize: 10, letterSpacing: "0.22em", color: C.amber, textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>{children}</div>;
+    }
+
+    function Label({ children }) {
+      return <label style={{ display: "block", fontSize: 13, color: C.text, marginBottom: 8, fontWeight: 500, lineHeight: 1.4 }}>{children}</label>;
+    }
+
+    function BackBtn({ onClick }) {
+      return (
+        <button onClick={onClick} style={{ background: "none", border: "none", color: C.muted, cursor: "pointer", fontSize: 13, padding: 0, marginBottom: 44, display: "flex", alignItems: "center", gap: 6 }}>
+          ← All modules
+        </button>
+      );
+    }
+
+    function SectionCard({ title, body }) {
+      return (
+        <div className="fade-in" style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "24px 26px", marginBottom: 14 }}>
+          {title && <div style={{ fontSize: 10, color: C.amber, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: 14 }}>{title}</div>}
+          <div style={{ fontSize: 14, color: C.text, lineHeight: 1.9, whiteSpace: "pre-wrap" }}>{body}</div>
+        </div>
+      );
+    }
+
+    function TopNav({ right }) {
+      return (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 52 }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: C.amber, letterSpacing: "0.08em" }}>Brand-Tastic</span>
+          {right || <a href="https://brand-tastic.ca" style={{ fontSize: 12, color: C.muted, textDecoration: "none" }}>brand-tastic.ca ↗</a>}
+        </div>
+      );
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    function App() {
+      const [phase, setPhase]             = useState("gate");
+      const [lead, setLead]               = useState({ name: "", email: "", linkedin: "" });
+      const [leadErrors, setLeadErrors]   = useState({});
+      const [activeModuleId, setActiveId] = useState(null);
+      const [inputs, setInputs]           = useState({});
+      const [results, setResults]         = useState({});
+      const [genError, setGenError]       = useState(null);
+      const [emailSent, setEmailSent]     = useState(false);
+      const [sharedCtx, setSharedCtx]     = useState({});
+
+      const completed = Object.keys(results).map(Number);
+      const allDone   = MODULES.every(m => results[m.id]);
+      const mod       = MODULES.find(m => m.id === activeModuleId);
+
+      // Fire email when all 5 are done
+      useEffect(() => {
+        if (allDone && !emailSent) {
+          sendResults(lead, results).catch(() => {});
+          setEmailSent(true);
+        }
+      }, [allDone]);
+
+      const goToModule = (id, force) => {
+        const done = results[id];
+        setActiveId(id);
+        setInputs({});
+        setGenError(null);
+        setPhase((!force && done) ? "results" : "input");
+      };
+
+      const handleGenerate = async () => {
+        setPhase("generating");
+        setGenError(null);
+        try {
+          const result = await runModule(mod, inputs, lead.name, sharedCtx);
+          setResults(prev => ({ ...prev, [mod.id]: result }));
+          if (mod.id === 1) {
+            setSharedCtx(prev => ({ ...prev, audience: inputs.audience, outcome: inputs.outcome, bio: inputs.bio, strength: inputs.strength }));
+          }
+          if (mod.id === 2) {
+            setSharedCtx(prev => ({ ...prev, headline: inputs.headline }));
+          }
+          if (mod.id === 3) {
+            setSharedCtx(prev => ({ ...prev, win: inputs.win, cta: inputs.cta }));
+          }
+          setPhase("results");
+        } catch (e) {
+          setGenError(e.message || "Something went wrong. Please try again.");
+          setPhase("input");
+        }
+      };
+
+      const page = (content) => (
+        <div style={{ background: C.bg, minHeight: "100vh" }}>{content}</div>
+      );
+
+      // ── GATE ──────────────────────────────────────────────────
+      if (phase === "gate") return page(
+        <div style={{ maxWidth: 520, margin: "0 auto", padding: "72px 24px" }}>
+          <div className="fade-up">
+            <TopNav />
+
+            <div style={{ marginBottom: 52 }}>
+              <div style={{ display: "inline-block", background: "#1A1200", border: "1px solid #2A1E00", borderRadius: 20, padding: "4px 12px", fontSize: 11, color: C.gold, fontWeight: 600, letterSpacing: "0.08em", marginBottom: 24 }}>
+                5 AI-powered audits — free
+              </div>
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 44, fontWeight: 700, lineHeight: 1.1, color: C.text, marginBottom: 22 }}>
+                Your LinkedIn profile<br />
+                <span style={{ color: C.amber }}>is costing you money.</span>
+              </h1>
+              <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.8, maxWidth: 440 }}>
+                Five AI-powered audits that show you exactly what the market sees when they land on your profile — and the specific fixes to turn it into an inbound machine.
+              </p>
+            </div>
+
+            <div style={{ display: "flex", gap: 6, marginBottom: 52 }}>
+              {MODULES.map(m => (
+                <div key={m.id} style={{ flex: 1 }}>
+                  <div style={{ height: 2, background: C.amber, opacity: 0.25, borderRadius: 1, marginBottom: 8 }} />
+                  <div style={{ fontSize: 10, color: C.muted, fontWeight: 500, lineHeight: 1.4 }}>{m.title}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14, padding: "32px 28px" }}>
+              <p style={{ fontSize: 12, color: C.muted, margin: "0 0 26px", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600 }}>
+                Enter your details — results delivered by email
+              </p>
+
+              <div style={{ marginBottom: 18 }}>
+                <Label>First name</Label>
+                <input type="text" className="field-input" value={lead.name}
+                  onChange={e => setLead(p => ({ ...p, name: e.target.value }))}
+                  placeholder="Your first name" />
+                {leadErrors.name && <p style={{ fontSize: 12, color: "#E24B4A", margin: "6px 0 0" }}>{leadErrors.name}</p>}
+              </div>
+
+              <div style={{ marginBottom: 18 }}>
+                <Label>Email address</Label>
+                <input type="email" className="field-input" value={lead.email}
+                  onChange={e => setLead(p => ({ ...p, email: e.target.value }))}
+                  placeholder="you@company.com" />
+                {leadErrors.email && <p style={{ fontSize: 12, color: "#E24B4A", margin: "6px 0 0" }}>{leadErrors.email}</p>}
+              </div>
+
+              <div style={{ marginBottom: 28 }}>
+                <Label>LinkedIn URL</Label>
+                <input type="text" className="field-input" value={lead.linkedin}
+                  onChange={e => setLead(p => ({ ...p, linkedin: e.target.value }))}
+                  placeholder="linkedin.com/in/yourname" />
+                {leadErrors.linkedin && <p style={{ fontSize: 12, color: "#E24B4A", margin: "6px 0 0" }}>{leadErrors.linkedin}</p>}
+              </div>
+
+              <button className="btn-primary" onClick={() => {
+                const errs = {};
+                if (!lead.name.trim())     errs.name     = "Name is required";
+                if (!lead.email.trim())    errs.email    = "Email is required";
+                if (!/\S+@\S+\.\S+/.test(lead.email)) errs.email = "Enter a valid email";
+                if (!lead.linkedin.trim()) errs.linkedin = "LinkedIn URL is required";
+                if (Object.keys(errs).length) { setLeadErrors(errs); return; }
+                setLeadErrors({});
+                setPhase("hub");
+              }}>
+                Start My Free Audit →
+              </button>
+
+              <p style={{ fontSize: 12, color: "#2E2B28", textAlign: "center", margin: "16px 0 0", lineHeight: 1.6 }}>
+                Results emailed to you when you complete all 5 modules. No spam, ever.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+
+      // ── HUB ───────────────────────────────────────────────────
+      if (phase === "hub") return page(
+        <div style={{ maxWidth: 660, margin: "0 auto", padding: "52px 24px" }}>
+          <TopNav right={allDone && (
+            <button onClick={() => setPhase("complete")} style={{ background: C.amber, color: "#0A0A0A", border: "none", borderRadius: 8, padding: "9px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+              View Full Report →
+            </button>
+          )} />
+
+          <div style={{ marginBottom: 44 }}>
+            <Eyebrow>LinkedIn Audit Suite</Eyebrow>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 600, color: C.text, marginBottom: 10 }}>
+              Welcome, {lead.name}.
+            </h2>
+            <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65 }}>
+              {completed.length === 0
+                ? "Five modules. Work through all of them for a complete profile transformation."
+                : completed.length < 5
+                ? `${completed.length} of 5 complete. Keep going — results email when you finish all five.`
+                : "All 5 complete — your results are on their way to " + lead.email}
+            </p>
+          </div>
+
+          <div style={{ display: "flex", gap: 6, marginBottom: 36 }}>
+            {MODULES.map(m => (
+              <div key={m.id} style={{ flex: 1, height: 3, background: completed.includes(m.id) ? C.amber : C.dim, borderRadius: 2, transition: "background 0.4s" }} />
+            ))}
+          </div>
+
+          <div style={{ display: "grid", gap: 10 }}>
+            {MODULES.map(m => {
+              const done = completed.includes(m.id);
+              return (
+                <div key={m.id} className={`module-card ${done ? "done" : ""}`}
+                  onClick={() => goToModule(m.id)}
+                  style={{ background: C.surface, border: `1px solid ${done ? C.legacyGold : C.border}`, borderRadius: 12, padding: "20px 24px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "border-color 0.2s, background 0.2s" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                    <div style={{ fontSize: 11, color: done ? C.amber : C.muted, fontWeight: 600, letterSpacing: "0.12em", minWidth: 26 }}>{m.num}</div>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 600, color: C.text, fontFamily: "'Playfair Display', serif", marginBottom: 4 }}>{m.full}</div>
+                      <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.5 }}>{m.tagline}</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 13, color: done ? C.amber : C.muted, fontWeight: 600, whiteSpace: "nowrap", marginLeft: 20, flexShrink: 0 }}>
+                    {done ? "View →" : "Run →"}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+
+      // ── INPUT ─────────────────────────────────────────────────
+      if (phase === "input" && mod) {
+        const allFilled = mod.inputs.length === 0 || mod.inputs.every(f => (inputs[f.id] || "").trim().length > 0);
+        return page(
+          <div style={{ maxWidth: 600, margin: "0 auto", padding: "52px 24px" }}>
+            <BackBtn onClick={() => setPhase("hub")} />
+            <Eyebrow>{mod.num} / 05</Eyebrow>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 600, color: C.text, marginBottom: 12 }}>{mod.full}</h2>
+            <p style={{ fontSize: 15, color: C.muted, marginBottom: 44, lineHeight: 1.65 }}>{mod.tagline}</p>
+
+            <div style={{ display: "grid", gap: 22, marginBottom: 32 }}>
+              {mod.inputs.map(field => (
+                <div key={field.id}>
+                  <Label>{field.label}</Label>
+                  {field.type === "textarea" ? (
+                    <textarea rows={field.rows || 4} className="field-input"
+                      value={inputs[field.id] || ""}
+                      onChange={e => setInputs(p => ({ ...p, [field.id]: e.target.value }))}
+                      placeholder={field.placeholder}
+                      style={{ width: "100%", background: "#0A0A0A", border: "1px solid #222", borderRadius: 8, padding: "12px 14px", color: "#F0EBE3", fontSize: 14, lineHeight: 1.6, resize: "vertical" }}
+                    />
+                  ) : (
+                    <input type="text" className="field-input"
+                      value={inputs[field.id] || ""}
+                      onChange={e => setInputs(p => ({ ...p, [field.id]: e.target.value }))}
+                      placeholder={field.placeholder}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {genError && <p style={{ color: "#E24B4A", fontSize: 13, marginBottom: 16, lineHeight: 1.5 }}>{genError}</p>}
+            <button className="btn-primary" onClick={handleGenerate} disabled={!allFilled}>
+              Run {mod.title} →
+            </button>
+          </div>
+        );
+      }
+
+      // ── GENERATING ────────────────────────────────────────────
+      if (phase === "generating" && mod) return page(
+        <div style={{ maxWidth: 520, margin: "0 auto", padding: "120px 24px", textAlign: "center" }}>
+          <div style={{ width: 40, height: 40, border: `2px solid ${C.dim}`, borderTopColor: C.amber, borderRadius: "50%", margin: "0 auto 32px", animation: "spin 0.9s linear infinite" }} />
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.text, marginBottom: 12, fontWeight: 600 }}>Running {mod.full}...</h3>
+          <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.7 }}>Brand-Tastic is analysing your profile from the market's perspective.<br />About 5–10 seconds.</p>
+        </div>
+      );
+
+      // ── RESULTS ───────────────────────────────────────────────
+      if (phase === "results" && mod) {
+        const sections = parseSections(results[mod.id] || "");
+        const nextMod  = MODULES.find(m => m.id === activeModuleId + 1);
+
+        return page(
+          <div style={{ maxWidth: 680, margin: "0 auto", padding: "52px 24px" }}>
+            <BackBtn onClick={() => setPhase("hub")} />
+
+            <div style={{ marginBottom: 40 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <Eyebrow>{mod.num} / 05</Eyebrow>
+                <div style={{ fontSize: 11, background: "#1A1200", border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 20, padding: "2px 10px", fontWeight: 600, letterSpacing: "0.08em", marginTop: "-14px" }}>Complete</div>
+              </div>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 600, color: C.text }}>{mod.full}</h2>
+            </div>
+
+            <div style={{ marginBottom: 40 }}>
+              {sections.map((s, i) => <SectionCard key={i} title={s.title} body={s.body} />)}
+            </div>
+
+            <div style={{ display: "grid", gap: 10 }}>
+              {allDone ? (
+                <button className="btn-primary" onClick={() => setPhase("complete")}>View Your Full Report →</button>
+              ) : nextMod ? (
+                <>
+                  <button className="btn-primary" onClick={() => goToModule(nextMod.id, true)}>Next: {nextMod.full} →</button>
+                  <button className="btn-ghost" onClick={() => setPhase("hub")}>Back to all modules</button>
+                </>
+              ) : (
+                <button className="btn-ghost" onClick={() => setPhase("hub")}>← Back to all modules</button>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      // ── COMPLETE ──────────────────────────────────────────────
+      if (phase === "complete") return page(
+        <div style={{ maxWidth: 580, margin: "0 auto", padding: "72px 24px" }}>
+          <div className="fade-up">
+            <div style={{ textAlign: "center", marginBottom: 60 }}>
+              <div style={{ width: 52, height: 52, background: "#141000", border: `1px solid ${C.amber}`, borderRadius: "50%", margin: "0 auto 28px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, color: C.amber }}>✓</div>
+              <Eyebrow>All 5 modules complete</Eyebrow>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, fontWeight: 700, color: C.text, marginBottom: 18, lineHeight: 1.1 }}>
+                Your audit is ready,<br /><span style={{ color: C.amber }}>{lead.name}.</span>
+              </h2>
+              <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.8, maxWidth: 440, margin: "0 auto" }}>
+                Your full results are on their way to{" "}
+                <span style={{ color: C.text, fontWeight: 500 }}>{lead.email}</span>.
+                Check your inbox — and your spam folder just in case.
+              </p>
+            </div>
+
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: "36px 32px", marginBottom: 14 }}>
+              <Eyebrow>Want more AI agents like this one?</Eyebrow>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.text, marginBottom: 14, fontWeight: 600, lineHeight: 1.3 }}>
+                Brand-Tastic builds AI execution engines for growing companies.
+              </h3>
+              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.8, marginBottom: 28 }}>
+                From AI-powered lead magnets and content systems to full marketing automation stacks — built, deployed, and running in weeks, not quarters.
+              </p>
+              <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 22, marginBottom: 28 }}>
+                {["AI-powered lead magnets and audit tools", "Automated content and outreach systems", "Full marketing stack architecture and build"].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+                    <div style={{ width: 5, height: 5, background: C.amber, borderRadius: "50%", flexShrink: 0 }} />
+                    <span style={{ fontSize: 14, color: C.muted }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="https://brand-tastic.ca/ai-execution" target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-block", background: C.amber, color: "#0A0A0A", borderRadius: 8, padding: "13px 28px", fontSize: 14, fontWeight: 600, textDecoration: "none", letterSpacing: "0.02em" }}>
+                See Our AI Agents →
+              </a>
+            </div>
+
+            <button className="btn-ghost" onClick={() => setPhase("hub")}>← Back to modules</button>
+          </div>
+        </div>
+      );
+
+      return null;
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

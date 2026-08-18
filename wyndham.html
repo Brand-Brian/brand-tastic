@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wyndham Rewards Insider</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* Wyndham brand blue — confirmed from brand PDFs */
+  --blue:       #0057A8;
+  --blue-mid:   #006DC6;
+  --blue-light: #2E8FD8;
+  --blue-pale:  rgba(0,87,168,0.15);
+  /* Insider dark canvas */
+  --canvas:     #071828;
+  --navy:       #0C2038;
+  --navy-mid:   #102848;
+  --navy-card:  #163260;
+  --navy-hover: #1C3E74;
+  /* Wyndham Rewards gold — confirmed from brand PDFs */
+  --gold:       #C9A44E;
+  --gold-lt:    #E4C07A;
+  --gold-pale:  rgba(201,164,78,0.12);
+  --gold-border:rgba(201,164,78,0.3);
+  --white:      #FFFFFF;
+  --off-white:  #F0EDE8;
+  --t1:         #FFFFFF;
+  --t2:         #90A8C0;
+  --t3:         #4E6478;
+  --border:     rgba(255,255,255,0.08);
+  --border-md:  rgba(255,255,255,0.14);
+  --green:      #1E9E72;
+  --green-pale: rgba(30,158,114,0.12);
+  --green-bdr:  rgba(30,158,114,0.3);
+  --red-pale:   rgba(220,80,60,0.12);
+  --red-bdr:    rgba(220,80,60,0.3);
+  --red:        #DC503C;
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'Lora', Georgia, serif;
+  --r: 10px; --r-sm: 6px; --r-xs: 4px;
+}
+html, body { height: 100%; font-family: var(--sans); background: var(--canvas); color: var(--t1); overflow: hidden; font-size: 14px; }
+
+/* ─── SHELL ─────────────────────────────────── */
+#landing  { display: block; padding-top: 42px; }
+#platform { display: none; position: relative; height: 100vh; overflow: hidden; background: var(--canvas); }
+
+/* ══════════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════════ */
+#landing { height: 100vh; overflow-y: auto; scroll-behavior: smooth; }
+
+/* NAV */
+.l-nav { top: 42px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  background: linear-gradient(180deg, rgba(7,25,46,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(4px);
+  transition: background 0.3s;
+}
+.l-nav.scrolled { background: rgba(7,25,46,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+.l-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.l-logo-mark {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--white); display: flex; align-items: center; justify-content: center;
+}
+.l-logo-mark svg { width: 22px; height: 22px; }
+.l-logo-text { font-size: 14px; font-weight: 600; color: var(--white); letter-spacing: 0.01em; }
+.l-logo-sub  { font-size: 10px; color: rgba(255,255,255,0.5); }
+.l-nav-right { display: flex; align-items: center; gap: 24px; }
+.l-nav-link  { font-size: 13px; color: rgba(255,255,255,0.7); cursor: pointer; transition: color 0.15s; }
+.l-nav-link:hover { color: var(--white); }
+.l-nav-btn {
+  background: var(--gold); color: var(--canvas); border: none;
+  padding: 9px 20px; border-radius: var(--r-sm);
+  font-size: 13px; font-weight: 600; font-family: var(--sans);
+  cursor: pointer; letter-spacing: 0.02em; transition: background 0.15s;
+}
+.l-nav-btn:hover { background: var(--gold-lt); }
+
+/* HERO */
+.hero {
+  position: relative; height: 100vh; min-height: 700px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-color: #0D2040;
+  background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'),
+                    url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover; background-position: center 40%;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(7,25,46,0.78) 0%,
+    rgba(13,32,64,0.60) 35%,
+    rgba(7,25,46,0.55) 65%,
+    rgba(0,48,135,0.45) 100%);
+}
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: left;
+  max-width: 860px; padding: 0 48px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,164,78,0.12); border: 1px solid var(--gold-border);
+  border-radius: 30px; padding: 6px 16px; margin-bottom: 28px; align-self: flex-start;
+}
+.hero-eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.hero-eyebrow-text { font-size: 11px; font-weight: 600; color: var(--gold-lt); letter-spacing: 0.1em; text-transform: uppercase; }
+.hero-headline {
+  font-family: var(--serif); font-size: clamp(32px, 3.8vw, 54px);
+  font-weight: 400; color: var(--white); line-height: 1.15;
+  letter-spacing: -0.01em; margin-bottom: 20px; text-align: left;
+}
+.hero-headline em { font-style: italic; color: var(--gold-lt); }
+.hero-subhead {
+  font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.72);
+  line-height: 1.7; max-width: 580px; margin: 0 0 40px;
+}
+.hero-ctas { display: flex; gap: 14px; justify-content: flex-start; flex-wrap: wrap; margin-bottom: 56px; }
+.btn-hero-gold {
+  background: var(--gold); color: var(--canvas); border: none;
+  padding: 15px 32px; border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 700; font-family: var(--sans);
+  cursor: pointer; letter-spacing: 0.03em; transition: all 0.2s;
+}
+.btn-hero-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.btn-hero-ghost {
+  background: rgba(255,255,255,0.08); color: var(--white);
+  border: 1px solid rgba(255,255,255,0.25); padding: 15px 32px;
+  border-radius: var(--r-sm); font-size: 14px; font-weight: 500;
+  font-family: var(--sans); cursor: pointer; letter-spacing: 0.02em;
+  transition: all 0.2s; backdrop-filter: blur(8px);
+}
+.btn-hero-ghost:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); }
+.hero-stats { display: flex; gap: 40px; justify-content: flex-start; }
+.hero-stat { text-align: center; }
+.hero-stat-n { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); line-height: 1; }
+.hero-stat-l { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+.hero-stat-sep { width: 1px; background: rgba(255,255,255,0.15); }
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;
+  opacity: 0.5; transition: opacity 0.2s; z-index: 2;
+}
+.hero-scroll:hover { opacity: 0.8; }
+.hero-scroll-line {
+  width: 1px; height: 40px; background: linear-gradient(180deg, transparent, rgba(255,255,255,0.6));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(0.8); } 50% { opacity: 1; transform: scaleY(1); } }
+.hero-scroll-txt { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+/* PARTNER STRIP */
+.l-partners {
+  background: var(--navy); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 18px 48px; display: flex; align-items: center; gap: 40px;
+}
+.l-partners-label { font-size: 10px; color: var(--t3); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+.l-partners-sep { width: 1px; height: 20px; background: var(--border-md); flex-shrink: 0; }
+.l-partners-logos { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+.partner-logo { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; transition: color 0.15s; cursor: default; }
+.partner-logo:hover { color: rgba(255,255,255,0.75); }
+
+/* FEATURES */
+.l-features { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
+.l-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.l-section-title { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 42px); font-weight: 400; color: var(--t1); line-height: 1.25; margin-bottom: 56px; max-width: 800px; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature-card {
+  background: var(--navy); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 32px 28px; position: relative; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.feature-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--gold) 100%);
+  opacity: 0; transition: opacity 0.2s;
+}
+.feature-card:hover::before { opacity: 1; }
+.feature-number { font-family: var(--serif); font-size: 64px; font-weight: 300; color: rgba(201,164,78,0.12); line-height: 1; margin-bottom: 20px; }
+.feature-title { font-size: 17px; font-weight: 600; color: var(--t1); margin-bottom: 10px; }
+.feature-body { font-size: 13px; color: var(--t2); line-height: 1.75; }
+
+/* VALUE CALLOUT */
+.l-value { background: var(--navy); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.l-value-inner { max-width: 1200px; margin: 0 auto; padding: 80px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.value-title { font-family: var(--serif); font-size: clamp(28px,3.5vw,44px); font-weight: 300; color: var(--t1); line-height: 1.25; margin-bottom: 20px; }
+.value-title em { font-style: italic; color: var(--gold-lt); }
+.value-body { font-size: 15px; color: var(--t2); line-height: 1.8; margin-bottom: 32px; }
+.value-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.vp-card { background: var(--canvas); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 20px; }
+.vp-n { font-family: var(--serif); font-size: 30px; font-weight: 300; color: var(--gold-lt); line-height: 1; margin-bottom: 6px; }
+.vp-l { font-size: 12px; color: var(--t2); line-height: 1.5; }
+
+/* CONVERSION */
+.l-convert { max-width: 1200px; margin: 0 auto; padding: 96px 48px; text-align: center; }
+.convert-card {
+  background: var(--navy); border: 1px solid var(--border-md);
+  border-radius: 16px; padding: 64px; position: relative; overflow: hidden;
+}
+.convert-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(201,164,78,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.convert-headline { font-family: var(--serif); font-size: clamp(28px,3.5vw,44px); font-weight: 300; color: var(--t1); margin-bottom: 16px; line-height: 1.2; }
+.convert-sub { font-size: 16px; color: var(--t2); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+.convert-price { font-family: var(--serif); font-size: 80px; font-weight: 300; color: var(--gold-lt); line-height: 1; margin-bottom: 8px; }
+.convert-price-sub { font-size: 13px; color: var(--t3); margin-bottom: 40px; letter-spacing: 0.04em; }
+.convert-ctas { display: flex; gap: 14px; justify-content: center; }
+
+/* LANDING FOOTER */
+.l-footer { background: var(--canvas); border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+.l-footer-brand { font-size: 12px; color: var(--t3); }
+.l-footer-links { display: flex; gap: 24px; }
+.l-footer-link { font-size: 12px; color: var(--t3); cursor: pointer; transition: color 0.15s; }
+.l-footer-link:hover { color: var(--t2); }
+
+/* ══════════════════════════════════════════
+   PLATFORM
+══════════════════════════════════════════ */
+.p-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 56px;
+  background: var(--blue);
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  position: relative; z-index: 20;
+}
+.p-topbar::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%);
+}
+.p-brand { display: flex; align-items: center; gap: 12px; }
+.p-mark { width: 32px; height: 32px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; }
+.p-mark svg { width: 20px; height: 20px; }
+.p-brand-name { font-size: 13px; font-weight: 600; color: #fff; }
+.p-brand-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+.p-topbar-right { display: flex; align-items: center; gap: 14px; }
+.p-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(201,164,78,0.2); border: 1px solid var(--gold-border);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 10px; font-weight: 700; color: var(--gold-lt); letter-spacing: 0.06em;
+}
+.p-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.p-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff; cursor: pointer;
+}
+
+/* PLATFORM BODY */
+.p-body { position: absolute; top: 88px; bottom: 36px; left: 0; right: 0; display: flex; overflow: hidden; }
+.p-sidebar {
+  width: 215px; min-width: 215px; flex-shrink: 0; background: var(--navy);
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  overflow-y: auto; height: 100%;
+}
+.p-sidebar::-webkit-scrollbar { width: 0; }
+.p-nav-section { padding: 12px 8px 0; }
+.p-nav-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t3); padding: 14px 10px 6px; }
+.p-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; cursor: pointer; border-radius: var(--r-sm);
+  font-size: 12px; font-weight: 400; color: var(--t2);
+  transition: all 0.15s; margin-bottom: 1px; position: relative;
+}
+.p-nav-item:hover { background: var(--navy-card); color: var(--t1); }
+.p-nav-item.active { background: rgba(0,48,135,0.55); color: #fff; font-weight: 500; border: 1px solid rgba(0,68,179,0.5); }
+.p-nav-item.active .ni { color: var(--gold-lt); opacity: 1; }
+.ni { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.6; }
+.p-nav-pip { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+.p-nav-divider { height: 1px; background: var(--border); margin: 8px 12px; }
+.p-sidebar-pts { margin: auto 0 0; padding: 14px 12px; border-top: 1px solid var(--border); }
+.pts-widget { background: var(--navy-card); border: 1px solid var(--gold-border); border-radius: var(--r-sm); padding: 14px; }
+.pts-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); margin-bottom: 4px; }
+.pts-num { font-family: var(--serif); font-size: 22px; color: var(--t1); line-height: 1; }
+.pts-sub { font-size: 11px; color: var(--gold); margin-top: 3px; font-weight: 500; }
+
+/* CONTENT */
+.p-content { flex: 1; overflow-y: auto; background: var(--canvas); height: 100%; }
+.p-content::-webkit-scrollbar { width: 5px; }
+.p-content::-webkit-scrollbar-thumb { background: var(--navy-card); border-radius: 3px; }
+.p-view { display: none; padding: 28px 32px; }
+.p-view.active { display: block; }
+.p-page-title { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--t1); margin-bottom: 4px; }
+.p-page-sub { font-size: 13px; color: var(--t2); margin-bottom: 24px; line-height: 1.65; }
+.p-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+
+/* PLATFORM CARDS */
+.p-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; margin-bottom: 14px; }
+.p-card-title { font-size: 13px; font-weight: 600; color: var(--t1); margin-bottom: 4px; }
+.p-card-body { font-size: 13px; color: var(--t2); line-height: 1.7; }
+
+/* METRICS GRID */
+.p-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
+.p-metric { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 16px; }
+.p-m-label { font-size: 10px; color: var(--t3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
+.p-m-value { font-family: var(--serif); font-size: 26px; color: var(--t1); line-height: 1; }
+.p-m-hint { font-size: 11px; color: var(--gold); margin-top: 5px; font-weight: 500; }
+.p-m-hint.dim { color: var(--t3); font-weight: 400; }
+
+/* INSIGHT */
+.p-insight {
+  background: var(--navy); border: 1px solid var(--gold-border);
+  border-left: 3px solid var(--gold); border-radius: var(--r);
+  padding: 20px; margin-bottom: 14px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+}
+.p-insight-title { font-family: var(--serif); font-size: 17px; font-style: italic; color: var(--t1); margin-bottom: 8px; }
+.p-insight-body { font-size: 13px; color: var(--t2); line-height: 1.7; }
+.p-insight-body strong { color: var(--t1); font-weight: 600; }
+
+/* BADGES */
+.bdg { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.04em; white-space: nowrap; }
+.bdg-gold { background: var(--gold-pale); color: var(--gold-lt); border: 1px solid var(--gold-border); }
+.bdg-green { background: var(--green-pale); color: #5DCAA5; border: 1px solid var(--green-bdr); }
+.bdg-blue { background: rgba(0,48,135,0.25); color: #85B7EB; border: 1px solid rgba(0,68,179,0.35); }
+.bdg-red { background: var(--red-pale); color: #F08070; border: 1px solid var(--red-bdr); }
+.bdg-live { background: var(--green-pale); color: #5DCAA5; border: 1px solid var(--green-bdr); padding: 4px 10px; }
+
+/* BUTTONS */
+.btn-gold { background: var(--gold); color: var(--canvas); border: none; padding: 10px 20px; border-radius: var(--r-sm); font-size: 12px; font-weight: 700; font-family: var(--sans); cursor: pointer; letter-spacing: 0.03em; transition: background 0.15s; white-space: nowrap; }
+.btn-gold:hover { background: var(--gold-lt); }
+.btn-gold-full { width: 100%; padding: 14px; font-size: 14px; font-weight: 700; background: var(--gold); color: var(--canvas); border: none; border-radius: var(--r-sm); font-family: var(--sans); cursor: pointer; letter-spacing: 0.02em; transition: background 0.15s; }
+.btn-gold-full:hover { background: var(--gold-lt); }
+.btn-blue { background: var(--blue); color: #fff; border: none; padding: 10px 20px; border-radius: var(--r-sm); font-size: 12px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+.btn-blue:hover { background: var(--blue-mid); }
+.btn-ghost { background: transparent; color: var(--t2); border: 1px solid var(--border-md); padding: 9px 16px; border-radius: var(--r-sm); font-size: 12px; font-family: var(--sans); cursor: pointer; transition: all 0.15s; }
+.btn-ghost:hover { border-color: var(--gold-border); color: var(--gold-lt); }
+
+/* ROI */
+.roi-summary { background: var(--navy-mid); border: 1px solid var(--gold-border); border-radius: var(--r-sm); padding: 18px; margin-top: 14px; }
+.roi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 14px; }
+.roi-lbl { font-size: 9px; color: var(--t3); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.roi-val { font-family: var(--serif); font-size: 22px; color: var(--t1); }
+.roi-footer { border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center; }
+.roi-payback { font-size: 12px; color: var(--gold); font-weight: 600; }
+.roi-cost { font-family: var(--serif); font-size: 24px; color: var(--gold); }
+.roi-cost-lbl { font-size: 9px; color: var(--t3); text-align: right; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+input[type="range"] { -webkit-appearance:none; width:100%; height:3px; background:var(--navy-card); border-radius:2px; outline:none; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--blue); cursor:pointer; border:2px solid var(--gold); }
+.sl-row { margin-bottom: 14px; }
+.sl-hdr { display: flex; justify-content: space-between; font-size: 11px; color: var(--t2); margin-bottom: 7px; }
+.sl-hdr span:last-child { font-weight: 600; color: var(--t1); }
+
+/* BENEFITS */
+.ben-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--border); gap: 16px; }
+.ben-row:last-child { border-bottom: none; }
+.ben-name { font-size: 13px; color: var(--t1); font-weight: 500; margin-bottom: 2px; }
+.ben-desc { font-size: 11px; color: var(--t2); }
+
+/* ACTIVITY */
+.act-hdr { padding: 10px 16px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); background: var(--navy-card); border-radius: var(--r) var(--r) 0 0; }
+.act-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid var(--border); transition: background 0.12s; }
+.act-row:hover { background: var(--navy-card); }
+.act-name { font-size: 13px; color: var(--t1); }
+.act-date { font-size: 11px; color: var(--t3); margin-top: 2px; }
+.act-pts { font-size: 12px; font-weight: 600; color: var(--gold); }
+
+/* TRIPS */
+.trip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.trip-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; cursor: pointer; transition: border-color 0.15s, transform 0.15s; }
+.trip-card:hover { border-color: var(--gold-border); transform: translateY(-2px); }
+.trip-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); margin-bottom: 5px; }
+.trip-name { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 5px; }
+.trip-desc { font-size: 11px; color: var(--t2); margin-bottom: 16px; line-height: 1.55; }
+.trip-foot { display: flex; justify-content: space-between; align-items: center; }
+.trip-price { font-family: var(--serif); font-size: 17px; color: var(--t1); }
+.trip-price-lbl { font-size: 10px; color: var(--t3); margin-bottom: 3px; }
+.add-trip { background: var(--navy); border: 1px dashed rgba(255,255,255,0.12); border-radius: var(--r); cursor: pointer; min-height: 145px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: border-color 0.15s; }
+.add-trip:hover { border-color: var(--gold-border); }
+
+/* EVENTS */
+.evt-list { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.evt-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--navy); border-bottom: 1px solid var(--border); transition: background 0.12s; gap: 16px; }
+.evt-row:last-child { border-bottom: none; }
+.evt-row:hover { background: var(--navy-card); }
+.evt-name { font-size: 13px; font-weight: 500; color: var(--t1); margin-bottom: 3px; }
+.evt-meta { font-size: 11px; color: var(--t3); }
+.evt-right { text-align: right; flex-shrink: 0; }
+.evt-pts { font-size: 11px; color: var(--t3); margin-bottom: 3px; }
+.evt-cta { font-size: 12px; font-weight: 600; color: var(--gold); cursor: pointer; }
+
+/* CHAT */
+.chat-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip { font-size: 11px; padding: 6px 13px; border-radius: 20px; border: 1px solid var(--border-md); background: var(--navy); color: var(--t2); cursor: pointer; font-family: var(--sans); transition: all 0.15s; }
+.chip:hover { border-color: var(--gold-border); color: var(--t1); }
+.chat-wrap { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.chat-msgs { height: 300px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 13px; background: var(--navy-mid); }
+.chat-msgs::-webkit-scrollbar { width: 4px; }
+.chat-msgs::-webkit-scrollbar-thumb { background: var(--navy-card); border-radius: 2px; }
+.chat-row { display: flex; gap: 10px; align-items: flex-start; }
+.chat-row.u { flex-direction: row-reverse; }
+.chat-av { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+.chat-av.bot { background: var(--blue); color: #fff; }
+.chat-av.usr { background: var(--navy-card); color: var(--t2); border: 1px solid var(--border-md); }
+.chat-bub { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.7; max-width: 82%; }
+.chat-bub.bot { background: var(--navy-card); color: var(--t1); border: 1px solid var(--border); }
+.chat-bub.usr { background: rgba(0,48,135,0.3); color: var(--t1); border: 1px solid rgba(0,68,179,0.4); }
+.chat-input-row { border-top: 1px solid var(--border); padding: 12px; display: flex; gap: 10px; background: var(--navy); }
+.chat-input-row input { flex: 1; background: var(--navy-mid); border: 1px solid var(--border-md); border-radius: var(--r-sm); padding: 9px 14px; color: var(--t1); font-family: var(--sans); font-size: 13px; outline: none; transition: border-color 0.15s; }
+.chat-input-row input:focus { border-color: var(--blue-light); }
+.chat-input-row input::placeholder { color: var(--t3); }
+
+/* ── CAMPAIGN ENGINE ─────────── */
+.camp-kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+.camp-kpi { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 16px; }
+.camp-kpi-lbl { font-size: 9px; color: var(--t3); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.camp-kpi-val { font-family: var(--serif); font-size: 24px; color: var(--t1); line-height: 1; }
+.camp-kpi-delta { font-size: 11px; font-weight: 600; margin-top: 5px; }
+.camp-kpi-delta.up { color: var(--green); }
+.camp-kpi-delta.neutral { color: var(--t3); }
+.camp-table { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.camp-thead { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 1fr 90px; padding: 10px 16px; background: var(--navy-card); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t3); }
+.camp-row { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 1fr 90px; padding: 14px 16px; border-top: 1px solid var(--border); background: var(--navy); align-items: center; transition: background 0.12s; }
+.camp-row:hover { background: var(--navy-card); }
+.camp-row-name { font-size: 13px; font-weight: 500; color: var(--t1); margin-bottom: 2px; }
+.camp-row-desc { font-size: 11px; color: var(--t3); }
+.camp-row-cell { font-size: 12px; color: var(--t2); }
+.toggle { width: 36px; height: 20px; border-radius: 10px; cursor: pointer; position: relative; transition: background 0.2s; border: none; padding: 0; }
+.toggle.on { background: var(--green); }
+.toggle.off { background: var(--navy-card); border: 1px solid var(--border-md); }
+.toggle::after { content: ''; position: absolute; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 0.2s; }
+.toggle.on::after { left: 18px; }
+.toggle.off::after { left: 2px; }
+
+/* ── PARTNER HUB ─────────── */
+.partner-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.partner-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; transition: border-color 0.15s; }
+.partner-card:hover { border-color: var(--gold-border); }
+.partner-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.partner-brand { font-size: 16px; font-weight: 700; color: var(--t1); letter-spacing: 0.02em; }
+.partner-cat { font-size: 10px; color: var(--t3); margin-top: 2px; }
+.partner-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.partner-metric-lbl { font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+.partner-metric-val { font-family: var(--serif); font-size: 16px; color: var(--t1); }
+.partner-bar { height: 3px; background: var(--navy-card); border-radius: 2px; margin-bottom: 14px; }
+.partner-bar-fill { height: 100%; border-radius: 2px; }
+.partner-cta { font-size: 11px; font-weight: 600; color: var(--blue-light); cursor: pointer; transition: color 0.15s; }
+.partner-cta:hover { color: var(--gold-lt); }
+
+/* ── INTELLIGENCE ─────────── */
+.seg-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 14px; }
+.seg-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; cursor: pointer; transition: border-color 0.15s; }
+.seg-card:hover { border-color: var(--gold-border); }
+.seg-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.seg-name { font-size: 13px; font-weight: 600; color: var(--t1); }
+.seg-size { font-family: var(--serif); font-size: 20px; color: var(--gold-lt); }
+.seg-size-lbl { font-size: 9px; color: var(--t3); text-align: right; }
+.seg-desc { font-size: 12px; color: var(--t2); line-height: 1.6; margin-bottom: 12px; }
+.seg-bar { height: 4px; background: var(--navy-card); border-radius: 2px; }
+.seg-bar-fill { height: 100%; border-radius: 2px; }
+.conversion-arc { max-width: 480px; margin: 0 auto 20px; }
+.arc-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.arc-row:last-child { border-bottom: none; }
+.arc-stage { font-size: 11px; color: var(--t2); width: 140px; flex-shrink: 0; }
+.arc-bar { flex: 1; height: 6px; background: var(--navy-card); border-radius: 3px; overflow: hidden; }
+.arc-fill { height: 100%; border-radius: 3px; }
+.arc-pct { font-size: 11px; font-weight: 600; color: var(--t1); width: 36px; text-align: right; }
+
+/* PLATFORM FOOTER */
+.p-footer { position: absolute; bottom: 0; left: 0; right: 0; height: 36px; padding: 0 24px; border-top: 1px solid var(--border); background: var(--navy); display: flex; justify-content: space-between; align-items: center; }
+.p-footer-txt { font-size: 10px; color: var(--t3); }
+
+/* ── UTILITY ─────────────────────────────── */
+.flex-sb { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.flex-center { display: flex; align-items: center; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-14 { margin-bottom: 14px; }
+.mb-20 { margin-bottom: 20px; }
+
+/* ══════════════════════════════════════════
+   MOBILE — ≤ 768px
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── LANDING NAV ── */
+  .l-nav { padding: 0 16px; }
+  .l-nav-right .l-nav-link { display: none; }
+  .l-nav-btn { font-size: 11px; padding: 7px 14px; }
+  .l-logo-sub { display: none; }
+
+  /* ── HERO ── */
+  .hero-content { padding: 0 20px; max-width: 100%; }
+  .hero-headline { font-size: clamp(28px, 9vw, 42px); }
+  .hero-subhead { font-size: 14px; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 36px; }
+  .btn-hero-gold, .btn-hero-ghost { width: 100%; max-width: 320px; text-align: center; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .hero-stat-n { font-size: 22px; }
+  .hero-stat-l { font-size: 10px; }
+
+  /* ── PARTNER STRIP ── */
+  .l-partners { padding: 14px 16px; gap: 16px; }
+  .l-partners-logos { gap: 20px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .partner-logo { font-size: 11px; white-space: nowrap; }
+
+  /* ── LANDING FEATURES ── */
+  .l-features { padding: 48px 16px; }
+  .l-section-title { font-size: 26px; margin-bottom: 32px; }
+  .features-grid { grid-template-columns: 1fr; gap: 14px; }
+  .feature-number { font-size: 40px; margin-bottom: 10px; }
+
+  /* ── VALUE SECTION ── */
+  .l-value-inner { grid-template-columns: 1fr; gap: 36px; padding: 48px 16px; }
+  .value-proof { grid-template-columns: 1fr 1fr; }
+  .value-title { font-size: 26px; }
+
+  /* ── CONVERSION SECTION ── */
+  .l-convert { padding: 48px 16px; }
+  .convert-card { padding: 32px 20px; }
+  .convert-headline { font-size: 24px; }
+  .convert-price { font-size: 56px; }
+  .convert-ctas { flex-direction: column; gap: 10px; }
+  .convert-ctas .btn-hero-gold,
+  .convert-ctas .btn-hero-ghost { width: 100%; }
+
+  /* ── LANDING FOOTER ── */
+  .l-footer { flex-direction: column; gap: 12px; padding: 24px 16px; text-align: center; }
+  .l-footer-links { justify-content: center; }
+
+  /* ── PLATFORM TOPBAR ── */
+  .p-topbar { padding: 0 12px; }
+  .p-brand-sub { display: none; }
+  .p-badge { display: none; }
+  .p-avatar { width: 28px; height: 28px; font-size: 10px; }
+  .btn-ghost { font-size: 10px !important; padding: 5px 10px !important; }
+
+  /* ── PLATFORM BREADCRUMB ── */
+  .p-breadcrumb { padding: 0 12px; font-size: 10px; }
+
+  /* ── PLATFORM SIDEBAR: hide on mobile ── */
+  .p-sidebar { display: none; }
+
+  /* ── PLATFORM BODY: full width, account for bottom nav ── */
+  .p-body { bottom: 56px !important; }
+
+  /* ── PLATFORM CONTENT: tighter padding ── */
+  .p-view { padding: 16px 14px !important; }
+
+  /* ── METRICS: 2-col on mobile ── */
+  .p-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .p-metrics .p-metric:last-child { grid-column: span 2; }
+  .p-m-value { font-size: 20px; }
+
+  /* ── INSIGHT CARD: stack ── */
+  .p-insight { flex-direction: column; gap: 12px; }
+  .p-insight .btn-gold { align-self: flex-start; }
+
+  /* ── TRIP GRID: single col ── */
+  .trip-grid { grid-template-columns: 1fr; }
+  .add-trip { min-height: 80px; }
+
+  /* ── PARTNER GRID: 2-col ── */
+  .partner-grid { grid-template-columns: 1fr 1fr; }
+
+  /* ── CAMPAIGN TABLE: hide columns on small screens ── */
+  .camp-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .camp-thead { grid-template-columns: 2fr 1fr 80px !important; }
+  .camp-thead span:nth-child(3),
+  .camp-thead span:nth-child(4),
+  .camp-thead span:nth-child(5) { display: none; }
+  .camp-row { grid-template-columns: 2fr 1fr 80px !important; }
+  .camp-row > div:nth-child(3),
+  .camp-row > div:nth-child(4),
+  .camp-row > div:nth-child(5) { display: none; }
+
+  /* ── SEGMENT GRID: single col ── */
+  .seg-grid { grid-template-columns: 1fr; }
+
+  /* ── ROI calculator: stack ── */
+  .p-card [style*="grid-template-columns: 1fr 1fr"] { display: block !important; }
+  .p-card [style*="grid-template-columns: 1fr 1fr"] > div:last-child { margin-top: 16px; }
+
+  /* ── CONVERT PAGE pillars: single col ── */
+  [id="pv-convert"] [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+  [id="pv-convert"] [style*="grid-template-columns: repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
+
+  /* ── CONVERT: trip examples ── */
+  [id="pv-convert"] [style*="grid-template-columns: repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
+
+  /* ── DASHBOARD conversion gap bars ── */
+  [id="pv-dash"] [style*="grid-template-columns: repeat(3,1fr)"] { grid-template-columns: 1fr !important; }
+
+  /* ── EVENTS table ── */
+  .evt-row { flex-direction: column; gap: 6px; padding: 12px 14px; }
+  .evt-right { flex-direction: row; gap: 12px; align-items: center; }
+
+  /* ── CHAT chips: wrap and scroll ── */
+  .chat-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; gap: 6px; }
+  .chip { white-space: nowrap; }
+  .chat-msgs { height: 260px; }
+
+  /* ── MOBILE BOTTOM NAV (shown only on mobile) ── */
+  .mobile-nav {
+    display: flex !important;
+  }
+}
+
+/* ── MOBILE BOTTOM NAV BASE ── */
+.mobile-nav {
+  display: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+  align-items: stretch;
+}
+.mnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  color: var(--t3);
+  transition: color 0.15s;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: none;
+  background: none;
+  padding: 0;
+  position: relative;
+}
+.mnav-item.active { color: var(--gold-lt); }
+.mnav-item svg { width: 20px; height: 20px; }
+.mnav-pip {
+  position: absolute;
+  top: 8px; right: calc(50% - 14px);
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ── TABLET 769-1024px ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .l-features { padding: 64px 24px; }
+  .l-value-inner { padding: 64px 24px; gap: 48px; }
+  .l-convert { padding: 64px 24px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .p-sidebar { width: 180px; min-width: 180px; }
+  .partner-grid { grid-template-columns: 1fr 1fr; }
+}
+
+  /* Brand-Tastic site nav */
+  .bt-top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 0.65rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: #0A0A0A;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .bt-top-bar-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.9rem; letter-spacing: 0.05em;
+    color: #F5F3EE; text-decoration: none;
+  }
+  .bt-top-bar-logo span { color: #EF9F27; }
+  .bt-top-bar-links { display: flex; gap: 1.5rem; list-style: none; }
+  .bt-top-bar-links a {
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(245,243,238,0.45); text-decoration: none; transition: color 0.2s;
+  }
+  .bt-top-bar-links a:hover { color: #EF9F27; }
+  .bt-top-bar-cta {
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #0A0A0A; background: #EF9F27; padding: 0.4rem 1rem;
+    text-decoration: none; font-weight: 600;
+  }
+  @media (max-width: 768px) {
+    .bt-top-bar-links { display: none; }
+    .bt-top-bar { padding: 0.65rem 1.25rem; }
+  }
+
+</style>
+</head>
+<body>
+<!-- Brand-Tastic Nav Bar -->
+<nav class="bt-top-bar">
+  <a href="index.html" class="bt-top-bar-logo">Brand<span>-</span>Tastic</a>
+  <ul class="bt-top-bar-links">
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="ai-execution.html">AI Execution</a></li>
+  </ul>
+  <a href="mailto:brian@brand-tastic.ca?subject=AI+Audit" class="bt-top-bar-cta">Get an AI Audit</a>
+</nav>
+
+
+<!-- ══ LANDING PAGE ══ -->
+<div id="landing">
+  <!-- NAV -->
+  <nav class="l-nav" id="l-nav">
+    <div class="l-logo">
+      <div class="l-logo-mark">
+        <svg viewBox="0 0 30 22" fill="none"><path d="M2 3L8 19L12 10.5L15 17L18 10.5L22 19L28 3" stroke="#0057A8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="l-logo-text">Wyndham Rewards Insider</div>
+        <div class="l-logo-sub">Powered by Snowstorm Technologies</div>
+      </div>
+    </div>
+    <div class="l-nav-right">
+      <span class="l-nav-link" onclick="document.getElementById('landing').scrollTo({top:document.querySelector('.l-features').offsetTop - 64, behavior:'smooth'})">Benefits</span>
+      <span class="l-nav-link" onclick="document.getElementById('landing').scrollTo({top:document.querySelector('.l-value').offsetTop - 64, behavior:'smooth'})">Why Insider</span>
+      <span class="l-nav-link" onclick="enterPlatform('member')">Insider Login</span>
+      <button class="l-nav-btn" onclick="enterPlatform('new')">Join Insider &mdash; $95/yr</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <div class="hero-eyebrow-text">Wyndham Rewards Insider &mdash; Now Live</div>
+      </div>
+      <h1 class="hero-headline">
+        More than points.<br><em>A whole new way to travel.</em>
+      </h1>
+      <p class="hero-subhead">
+        120 million members. 60,000+ hotels. One subscription that unlocks everything &mdash; from sold-out concerts to all-inclusive escapes. Starting at $95 a year.
+      </p>
+      <div class="hero-ctas">
+        <button class="btn-hero-gold" onclick="enterPlatform('new')">Explore Insider &rarr;</button>
+        <button class="btn-hero-ghost" onclick="enterPlatform('member')">Insider Login</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n">120M+</div>
+          <div class="hero-stat-l">Members</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">60K+</div>
+          <div class="hero-stat-l">Hotels</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">50K+</div>
+          <div class="hero-stat-l">Live Events</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">$95</div>
+          <div class="hero-stat-l">Per Year</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('landing').scrollTo({top:document.querySelector('.l-partners').offsetTop, behavior:'smooth'})">
+      <div class="hero-scroll-txt">Scroll</div>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- PARTNER STRIP -->
+  <div class="l-partners">
+    <div class="l-partners-label">Official Partners</div>
+    <div class="l-partners-sep"></div>
+    <div class="l-partners-logos">
+      <a class="partner-logo" href="https://www.ticketmaster.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">TICKETMASTER</a>
+      <a class="partner-logo" href="https://www.carnival.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">CARNIVAL</a>
+      <a class="partner-logo" href="https://disneyworld.disney.go.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">DISNEY WORLD</a>
+      <a class="partner-logo" href="https://seaworld.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">SEAWORLD</a>
+      <a class="partner-logo" href="https://www.legoland.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">LEGOLAND</a>
+      <a class="partner-logo" href="https://www.aircanada.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">AIR CANADA</a>
+      <a class="partner-logo" href="https://www.avis.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">AVIS</a>
+      <a class="partner-logo" href="https://www.livenation.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">LIVE NATION</a>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="l-features">
+    <div class="l-section-label">How It Works</div>
+    <h2 class="l-section-title">Premium benefits. Everyday price. Day-one value.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-number">01</div>
+        <div class="feature-title">Save instantly on every trip</div>
+        <div class="feature-body">10% or more off standard rates at 8,000+ qualifying Wyndham hotels. Savings on flights, car rentals, cruises, and activities. A single stay pays back the $95 subscription.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">02</div>
+        <div class="feature-title">Earn faster. Redeem further.</div>
+        <div class="feature-body">Automatic Gold status from day one with a 50% points accelerator. Earn 2 points per dollar on Ticketmaster. Redeem on free nights, live events, and exclusive experiences.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">03</div>
+        <div class="feature-title">Access the inaccessible</div>
+        <div class="feature-body">White-glove concierge sources tickets to sold-out shows, playoff games, and VIP events. No blackout restrictions. If there is a ticket, your concierge can find it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUE -->
+  <div class="l-value">
+    <div class="l-value-inner">
+      <div>
+        <div class="l-section-label">The Math</div>
+        <h2 class="value-title">One trip. <em>Already paid for itself.</em></h2>
+        <p class="value-body">Wyndham designed Insider to be the antidote to premium credit cards charging $495 to $795 a year. At $95, the benefits traditionally reserved for the travel elite are now accessible to everyone.</p>
+        <button class="btn-hero-gold" onclick="enterPlatform('new')" style="font-size:13px;padding:13px 28px;">Calculate your savings &rarr;</button>
+      </div>
+      <div class="value-proof">
+        <div class="vp-card">
+          <div class="vp-n">$850+</div>
+          <div class="vp-l">Saved on a 5-night Caribbean all-inclusive for a family of four</div>
+        </div>
+        <div class="vp-card">
+          <div class="vp-n">$580</div>
+          <div class="vp-l">Saved on a 4-night Orlando trip with Disney park tickets</div>
+        </div>
+        <div class="vp-card">
+          <div class="vp-n">40%</div>
+          <div class="vp-l">Off select cruise lines when bundled with a hotel stay</div>
+        </div>
+        <div class="vp-card">
+          <div class="vp-n">7</div>
+          <div class="vp-l">Nights until the $95 subscription pays back at $150/night</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONVERSION -->
+  <div class="l-convert">
+    <div class="convert-card">
+      <div class="l-section-label">Join Today</div>
+      <h2 class="convert-headline">The easiest travel decision you make all year.</h2>
+      <p class="convert-sub">First 14 months for the price of 12. 7,500 bonus points on signup. Cancel anytime.</p>
+      <div class="convert-price">$95</div>
+      <div class="convert-price-sub">per year &nbsp;&middot;&nbsp; auto-renews annually &nbsp;&middot;&nbsp; cancel anytime</div>
+      <div class="convert-ctas">
+        <button class="btn-hero-gold" onclick="enterPlatform('new')">Start your Insider year &rarr;</button>
+        <button class="btn-hero-ghost" onclick="enterPlatform('member')">Insider Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="l-footer">
+    <div class="l-footer-brand">Wyndham Rewards Insider &nbsp;&middot;&nbsp; Administered by Snowstorm Technologies &nbsp;&middot;&nbsp; AI strategy by Brand-Tastic</div>
+    <div class="l-footer-links">
+      <span class="l-footer-link">Terms</span>
+      <span class="l-footer-link">Privacy</span>
+      <span class="l-footer-link">Support</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PLATFORM ══ -->
+<div id="platform">
+
+  <!-- TOPBAR -->
+  <div class="p-topbar">
+    <div class="p-brand">
+      <div class="p-mark">
+        <svg viewBox="0 0 30 22" fill="none"><path d="M2 3L8 19L12 10.5L15 17L18 10.5L22 19L28 3" stroke="#0057A8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="p-brand-name">Wyndham Rewards Insider</div>
+        <div class="p-brand-sub">Snowstorm Technologies &nbsp;&middot;&nbsp; AI by Brand-Tastic</div>
+      </div>
+    </div>
+    <div class="p-topbar-right">
+      <div class="p-badge"><div class="p-badge-dot"></div>Gold Member</div>
+      <div class="p-avatar">BF</div>
+      <button class="btn-ghost" onclick="exitPlatform()" style="font-size:11px;padding:6px 12px;">Exit demo</button>
+    </div>
+  </div><!-- /p-topbar -->
+
+  <!-- BREADCRUMB -->
+  <div class="p-breadcrumb" id="p-breadcrumb">
+    <span class="bc-link" onclick="exitPlatform()">&#8962; Wyndham Rewards Insider</span>
+    <span class="bc-sep">&#8250;</span>
+    <span class="bc-current" id="bc-current">Dashboard</span>
+  </div>
+
+  <div class="p-body">
+    <!-- SIDEBAR -->
+    <div class="p-sidebar">
+      <div class="p-nav-section">
+        <div class="p-nav-item active" onclick="pView('dash')" id="pn-dash">
+          <svg class="ni" viewBox="0 0 16 16" fill="currentColor"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/><rect x="9" y="9" width="5.5" height="5.5" rx="1" opacity="0.35"/></svg>Dashboard
+        </div>
+        <div class="p-nav-item" onclick="pView('insider')" id="pn-insider">
+          <svg class="ni" viewBox="0 0 16 16" fill="currentColor"><polygon points="8,1.5 10,6.2 15.2,6.5 11.5,10 12.8,15 8,12.4 3.2,15 4.5,10 0.8,6.5 6,6.2"/></svg>Insider
+          <div class="p-nav-pip"></div>
+        </div>
+        <div class="p-nav-item" onclick="pView('concierge')" id="pn-concierge">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2" fill="currentColor" stroke="none"/><line x1="8" y1="1.5" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="14.5"/><line x1="1.5" y1="8" x2="4" y2="8"/><line x1="12" y1="8" x2="14.5" y2="8"/></svg>AI Concierge
+        </div>
+        <div class="p-nav-item" onclick="pView('journeys')" id="pn-journeys">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14L8 2L14 14"/><line x1="4.5" y1="10" x2="11.5" y2="10"/></svg>Journeys
+        </div>
+        <div class="p-nav-item" onclick="pView('experiences')" id="pn-experiences">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="8" r="6.5"/><polygon points="6.5,5.5 11.5,8 6.5,10.5" fill="currentColor" stroke="none"/></svg>Experiences
+        </div>
+        <div class="p-nav-divider"></div>
+        <div class="p-nav-label">Marketing Engine</div>
+        <div class="p-nav-item" onclick="pView('campaigns')" id="pn-campaigns">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 11 L8 3 L14 11 L11 11 L11 14 L5 14 L5 11 Z"/><line x1="8" y1="6" x2="8" y2="9"/></svg>Campaigns
+        </div>
+        <div class="p-nav-item" onclick="pView('partners')" id="pn-partners">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="5" cy="5" r="2.5"/><circle cx="11" cy="5" r="2.5"/><circle cx="8" cy="11" r="2.5"/><line x1="7" y1="6" x2="6" y2="9"/><line x1="9" y1="6" x2="10" y2="9"/></svg>Partners
+        </div>
+        <div class="p-nav-item" onclick="pView('intelligence')" id="pn-intelligence">
+          <svg class="ni" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 2 A6 6 0 1 0 8 14 A6 6 0 1 0 8 2Z"/><path d="M8 5 L8 8 L10.5 10"/></svg>Intelligence
+        </div>
+      </div>
+      <div class="p-sidebar-pts">
+        <div class="pts-widget">
+          <div class="pts-lbl">Points Balance</div>
+          <div class="pts-num">142,500</div>
+          <div class="pts-sub">= 19 free nights</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="p-content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="p-view active" id="pv-dash">
+        <!-- Welcome bar -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+          <div>
+            <h1 class="p-page-title">Good morning, Brian.</h1>
+            <p class="p-page-sub" style="margin-bottom:0;">Gold member &nbsp;&middot;&nbsp; 8 qualified stays &nbsp;&middot;&nbsp; 10 nights from Platinum &nbsp;&middot;&nbsp; 142,500 points</p>
+          </div>
+          <button class="btn-gold" onclick="pView('convert')" style="margin-top:4px;white-space:nowrap;">Join Insider &mdash; $95</button>
+        </div>
+
+        <!-- KPI row -->
+        <div class="p-metrics">
+          <div class="p-metric">
+            <div class="p-m-label">Points Balance</div>
+            <div class="p-m-value">142,500</div>
+            <div class="p-m-hint">= 19 free nights</div>
+          </div>
+          <div class="p-metric">
+            <div class="p-m-label">Insider Savings</div>
+            <div class="p-m-value">$0</div>
+            <div class="p-m-hint dim">Subscribe to unlock</div>
+          </div>
+          <div class="p-metric">
+            <div class="p-m-label">Nights This Year</div>
+            <div class="p-m-value">8</div>
+            <div class="p-m-hint dim">10 more to Platinum</div>
+          </div>
+        </div>
+
+        <!-- AI insight -->
+        <div class="p-insight flex-sb" style="margin-bottom:14px;">
+          <div style="flex:1;">
+            <div class="p-eyebrow">AI Insight &mdash; personalised for you</div>
+            <div class="p-insight-title">Your 8 stays this year already justify Insider.</div>
+            <div class="p-insight-body">At $150/night with a 10% discount, you would have saved <strong>$120</strong> on hotels alone. Add two Ticketmaster events and one flight and your total savings exceed <strong>$185</strong>. The subscription costs $95. You are already <strong>$90 ahead.</strong></div>
+          </div>
+          <button class="btn-gold" onclick="pView('convert')">See the math</button>
+        </div>
+
+        <!-- Conversion gap -->
+        <div class="p-card mb-14">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+            <div>
+              <div class="p-eyebrow" style="margin-bottom:4px;">Platform Opportunity</div>
+              <div class="p-card-title">120M members. $95/year. The gap is a brand and messaging problem.</div>
+            </div>
+            <button class="btn-blue" onclick="pView('campaigns')" style="font-size:11px;margin-top:2px;">Launch campaign</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:14px;align-items:flex-end;">
+            <div style="text-align:center;">
+              <div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Industry target (1%)</div>
+              <div style="height:50px;background:rgba(255,255,255,0.06);border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:12px;font-weight:600;color:var(--t3);margin-top:6px;">$114M ARR</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:9px;color:var(--gold);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Brand-Tastic target (10%)</div>
+              <div style="height:140px;background:linear-gradient(180deg,var(--gold) 0%,#9A7828 100%);border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:12px;font-weight:600;color:var(--gold-lt);margin-top:6px;">$1.14B ARR</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Incremental delta</div>
+              <div style="height:95px;border:1px dashed rgba(0,110,198,0.5);background:rgba(0,87,168,0.12);border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;"><span style="font-family:var(--serif);font-size:20px;color:#85B7EB;">+$1.03B</span></div>
+              <div style="font-size:12px;font-weight:600;color:#85B7EB;margin-top:6px;">Unlocked</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--t3);line-height:1.7;">Snowstorm's infrastructure is proven. The barrier to 10% conversion is personalised messaging, AI segmentation, and a campaign engine that keeps members inside the ecosystem. That is what this layer delivers.</div>
+        </div>
+
+        <!-- Recent activity -->
+        <div class="p-card" style="padding:0;overflow:hidden;">
+          <div class="act-hdr">Recent Activity</div>
+          <div class="act-row"><div><div class="act-name">La Quinta by Wyndham, Halifax</div><div class="act-date">March 14 &mdash; 2 nights</div></div><div class="act-pts">+3,200 pts</div></div>
+          <div class="act-row"><div><div class="act-name">Wyndham Vancouver Airport</div><div class="act-date">February 28 &mdash; 1 night</div></div><div class="act-pts">+1,800 pts</div></div>
+          <div class="act-row"><div><div class="act-name">Baymont by Wyndham, Toronto</div><div class="act-date">January 11 &mdash; 3 nights</div></div><div class="act-pts">+4,500 pts</div></div>
+        </div>
+      </div>
+
+      <!-- ── INSIDER ── -->
+      <!-- ── INSIDER BENEFITS (sidebar nav tab) ── -->
+      <div class="p-view" id="pv-insider">
+        <h1 class="p-page-title">Insider Benefits</h1>
+        <p class="p-page-sub">Everything you unlock the moment you subscribe.</p>
+        <div class="p-card">
+          <div class="p-card-title mb-14">Your personalised savings estimate</div>
+          <div class="sl-row"><div class="sl-hdr"><span>Hotel nights per year</span><span id="nv">8</span></div><input type="range" min="1" max="30" value="8" step="1" id="ns" oninput="calcROI()"></div>
+          <div class="sl-row"><div class="sl-hdr"><span>Average nightly rate</span><span id="rv">$150</span></div><input type="range" min="80" max="400" value="150" step="10" id="rs" oninput="calcROI()"></div>
+          <div class="roi-summary">
+            <div class="roi-grid">
+              <div><div class="roi-lbl">Hotel Savings</div><div class="roi-val" id="hs">$120</div></div>
+              <div><div class="roi-lbl">Flights + Events</div><div class="roi-val">$65</div></div>
+              <div><div class="roi-lbl">Total Savings</div><div class="roi-val" id="ts">$185</div></div>
+            </div>
+            <div class="roi-footer"><div class="roi-payback" id="pm">Pays back on your 7th night.</div><div><div class="roi-cost-lbl">Annual Cost</div><div class="roi-cost">$95</div></div></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card-title mb-14">What you unlock on day one</div>
+          <div class="ben-row"><div><div class="ben-name">10%+ off 8,000+ hotels</div><div class="ben-desc">Qualifying Wyndham properties worldwide</div></div><span class="bdg bdg-green">Up to $200+/yr</span></div>
+          <div class="ben-row"><div><div class="ben-name">Automatic Gold status + 50% points accelerator</div><div class="ben-desc">No stays required. Active from day one.</div></div><span class="bdg bdg-gold">Instant</span></div>
+          <div class="ben-row"><div><div class="ben-name">Ticketmaster earn + redeem</div><div class="ben-desc">50,000+ concerts, sports, theatre. No blackout shows.</div></div><span class="bdg bdg-blue">2 pts/dollar</span></div>
+          <div class="ben-row"><div><div class="ben-name">Up to 40% off cruises</div><div class="ben-desc">Carnival + select cruise lines via Wyndham Travel Bundles</div></div><span class="bdg bdg-green">Best rate</span></div>
+          <div class="ben-row"><div><div class="ben-name">Walt Disney World, SeaWorld, LEGOLAND</div><div class="ben-desc">Exclusive theme park and attraction pricing</div></div><span class="bdg bdg-gold">Exclusive</span></div>
+          <div class="ben-row"><div><div class="ben-name">White-glove concierge</div><div class="ben-desc">VIP access, sold-out events, bespoke travel planning</div></div><span class="bdg bdg-blue">Included</span></div>
+        </div>
+        <button class="btn-gold-full" onclick="pView('convert')">Join Insider &mdash; $95/year</button>
+        <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px;">First 14 months for the price of 12. 7,500 bonus points. Cancel anytime.</p>
+      </div>
+
+      <!-- ── EXPLORE INSIDER: full conversion page ── -->
+      <div class="p-view" id="pv-convert">
+
+        <!-- Hero band -->
+        <div style="background:linear-gradient(120deg,var(--navy-card) 0%,var(--navy-mid) 100%);border:1px solid var(--gold-border);border-radius:var(--r);padding:36px 32px;margin-bottom:18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:rgba(201,164,78,0.05);border:1px solid rgba(201,164,78,0.08);pointer-events:none;"></div>
+          <div class="p-eyebrow" style="margin-bottom:10px;">Wyndham Rewards Insider &nbsp;&middot;&nbsp; $95 / year</div>
+          <div style="font-family:var(--serif);font-size:clamp(22px,2.8vw,34px);font-weight:500;color:var(--t1);line-height:1.25;margin-bottom:10px;max-width:540px;">Premium travel benefits. Everyday price. Pays for itself on your first trip.</div>
+          <div style="font-size:13px;color:var(--t2);line-height:1.75;max-width:500px;margin-bottom:24px;">For decades the best discounts, the best events, and the best perks required a $495 to $795 annual fee credit card. Insider changes that. One flat subscription. 120 million members eligible. Day-one value, no catches.</div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <button class="btn-gold" style="font-size:14px;padding:13px 28px;">Start your Insider year &mdash; $95</button>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;">14 months for the price of 12<br>7,500 bonus points on signup &nbsp;&middot;&nbsp; Cancel anytime</div>
+          </div>
+        </div>
+
+        <!-- 3 value pillars -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;">
+          <div style="background:var(--navy);border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:var(--r);padding:20px;">
+            <div style="font-size:22px;margin-bottom:10px;">&#127968;</div>
+            <div style="font-family:var(--serif);font-size:16px;color:var(--t1);margin-bottom:6px;font-weight:500;">Save on every stay</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:12px;">10%+ off 8,000+ hotels worldwide. Automatic Gold status from day one, plus a 50% points accelerator. No minimum stays required.</div>
+            <div style="font-family:var(--serif);font-size:22px;color:var(--gold-lt);">Up to $200+ / yr</div>
+            <div style="font-size:10px;color:var(--t3);margin-top:2px;">on hotel stays alone</div>
+          </div>
+          <div style="background:var(--navy);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:var(--r);padding:20px;">
+            <div style="font-size:22px;margin-bottom:10px;">&#127926;</div>
+            <div style="font-family:var(--serif);font-size:16px;color:var(--t1);margin-bottom:6px;font-weight:500;">Access the inaccessible</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:12px;">Earn and redeem points on 50,000+ Ticketmaster events. White-glove concierge sources sold-out tickets. No blackout restrictions on any show.</div>
+            <div style="font-family:var(--serif);font-size:22px;color:var(--gold-lt);">50,000+ events</div>
+            <div style="font-size:10px;color:var(--t3);margin-top:2px;">concerts, sports, theatre</div>
+          </div>
+          <div style="background:var(--navy);border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r);padding:20px;">
+            <div style="font-size:22px;margin-bottom:10px;">&#9973;&#65039;</div>
+            <div style="font-family:var(--serif);font-size:16px;color:var(--t1);margin-bottom:6px;font-weight:500;">Bundle and save big</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:12px;">Up to 40% off Carnival cruises. Up to 30% off other lines. Up to 15% on international flights. Bundle hotel, flights, car and activities in one booking.</div>
+            <div style="font-family:var(--serif);font-size:22px;color:var(--gold-lt);">Up to 40% off</div>
+            <div style="font-size:10px;color:var(--t3);margin-top:2px;">select cruise lines</div>
+          </div>
+        </div>
+
+        <!-- ROI Calculator -->
+        <div class="p-card" style="margin-bottom:18px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+            <div><div class="p-eyebrow" style="margin-bottom:4px;">The Math</div><div class="p-card-title">Calculate your personal Insider ROI</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+            <div>
+              <div class="sl-row"><div class="sl-hdr"><span>Hotel nights per year</span><span id="cv-nv">8</span></div><input type="range" min="1" max="30" value="8" step="1" id="cv-ns" oninput="calcCvROI()"></div>
+              <div class="sl-row"><div class="sl-hdr"><span>Average nightly rate</span><span id="cv-rv">$150</span></div><input type="range" min="80" max="400" value="150" step="10" id="cv-rs" oninput="calcCvROI()"></div>
+              <div class="sl-row"><div class="sl-hdr"><span>Live events per year</span><span id="cv-ev">2</span></div><input type="range" min="0" max="12" value="2" step="1" id="cv-es" oninput="calcCvROI()"></div>
+              <div class="sl-row"><div class="sl-hdr"><span>Flights per year</span><span id="cv-fv">4</span></div><input type="range" min="0" max="20" value="4" step="1" id="cv-fs" oninput="calcCvROI()"></div>
+            </div>
+            <div style="background:var(--navy-mid);border:1px solid var(--gold-border);border-radius:var(--r-sm);padding:20px;">
+              <div style="margin-bottom:14px;"><div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Your estimated annual savings</div><div style="font-family:var(--serif);font-size:44px;color:var(--gold-lt);line-height:1;" id="cv-total">$185</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+                <div style="background:rgba(255,255,255,0.04);border-radius:var(--r-xs);padding:10px;"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px;">Hotels</div><div style="font-size:15px;font-family:var(--serif);color:var(--t1);" id="cv-hotel">$120</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:var(--r-xs);padding:10px;"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px;">Events</div><div style="font-size:15px;font-family:var(--serif);color:var(--t1);" id="cv-events">$30</div></div>
+                <div style="background:rgba(255,255,255,0.04);border-radius:var(--r-xs);padding:10px;"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px;">Flights</div><div style="font-size:15px;font-family:var(--serif);color:var(--t1);" id="cv-flights">$35</div></div>
+                <div style="background:rgba(201,164,78,0.08);border:1px solid var(--gold-border);border-radius:var(--r-xs);padding:10px;"><div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px;">Cost</div><div style="font-size:15px;font-family:var(--serif);color:var(--gold);">$95</div></div>
+              </div>
+              <div style="border-top:1px solid var(--border);padding-top:10px;font-size:12px;color:var(--gold);font-weight:600;" id="cv-msg">You come out $90 ahead after year one.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip savings -->
+        <div class="p-card" style="margin-bottom:18px;">
+          <div class="p-eyebrow" style="margin-bottom:4px;">Real Savings</div>
+          <div class="p-card-title" style="margin-bottom:14px;">What Insider saves on real trips</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div style="background:var(--navy-mid);border-radius:var(--r-sm);padding:14px;border:1px solid var(--border);">
+              <div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Family Getaway</div>
+              <div style="font-size:12px;font-weight:600;color:var(--t1);margin-bottom:2px;">Orlando, 4 nights</div>
+              <div style="font-size:10px;color:var(--t3);margin-bottom:12px;">Hotel + flights + car + Disney tickets</div>
+              <div style="font-size:10px;color:var(--t3);text-decoration:line-through;margin-bottom:2px;">$3,427</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:17px;font-family:var(--serif);color:var(--t1);">$2,847</div><span class="bdg bdg-green">Save $580</span></div>
+            </div>
+            <div style="background:var(--navy-mid);border-radius:var(--r-sm);padding:14px;border:1px solid var(--border);">
+              <div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">All-Inclusive Escape</div>
+              <div style="font-size:12px;font-weight:600;color:var(--t1);margin-bottom:2px;">Samana, 5 nights</div>
+              <div style="font-size:10px;color:var(--t3);margin-bottom:12px;">Hotel + flights + transfers + excursion</div>
+              <div style="font-size:10px;color:var(--t3);text-decoration:line-through;margin-bottom:2px;">$8,066</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:17px;font-family:var(--serif);color:var(--t1);">$7,215</div><span class="bdg bdg-green">Save $851</span></div>
+            </div>
+            <div style="background:var(--navy-mid);border-radius:var(--r-sm);padding:14px;border:1px solid var(--border);">
+              <div style="font-size:9px;color:var(--t3);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Weekend + Concert</div>
+              <div style="font-size:12px;font-weight:600;color:var(--t1);margin-bottom:2px;">Nashville, 2 nights</div>
+              <div style="font-size:10px;color:var(--t3);margin-bottom:12px;">Hotel + flights + Ticketmaster show</div>
+              <div style="font-size:10px;color:var(--t3);text-decoration:line-through;margin-bottom:2px;">$960</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-size:17px;font-family:var(--serif);color:var(--t1);">$814</div><span class="bdg bdg-green">Save $146</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote + final CTA -->
+        <div style="background:var(--navy-card);border:1px solid var(--gold-border);border-radius:var(--r);padding:28px 32px;margin-bottom:18px;text-align:center;">
+          <div style="font-family:var(--serif);font-size:18px;font-style:italic;color:var(--t1);line-height:1.65;max-width:540px;margin:0 auto 14px;">"People today want more than just points &mdash; they want breadth, flexibility, and value they can feel across every aspect of their journey."</div>
+          <div style="font-size:11px;color:var(--t3);">Scott Strickland, Chief Commercial Officer &mdash; Wyndham Hotels &amp; Resorts</div>
+        </div>
+        <button class="btn-gold-full" style="font-size:15px;margin-bottom:8px;">Join Insider today &mdash; $95 / year</button>
+        <p style="font-size:11px;color:var(--t3);text-align:center;">14 months for the price of 12 &nbsp;&middot;&nbsp; 7,500 bonus points &nbsp;&middot;&nbsp; Cancel anytime</p>
+      </div>
+
+      <!-- ── AI CONCIERGE ── -->
+      <div class="p-view" id="pv-concierge">
+        <div class="flex-sb mb-14"><div><h1 class="p-page-title">AI Concierge</h1><p style="font-size:13px;color:var(--t2);">Powered by Claude &middot; Your travel profile is loaded</p></div><span class="bdg-live">Live AI</span></div>
+        <div class="chat-chips">
+          <button class="chip" onclick="fire('What would Insider actually save me this year based on my 8 stays between Halifax and Vancouver?')">My Insider savings</button>
+          <button class="chip" onclick="fire('Plan a 4-night Orlando family trip and show Insider vs standard pricing.')">Orlando family trip</button>
+          <button class="chip" onclick="fire('What live events can I redeem my 142,500 points for this summer in Canada?')">Redeem points for events</button>
+          <button class="chip" onclick="fire('How close am I to Platinum and what does it unlock?')">Path to Platinum</button>
+          <button class="chip" onclick="fire('What Carnival cruise can I bundle with a Halifax departure hotel stay?')">Cruise bundle options</button>
+        </div>
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="cm">
+            <div class="chat-row"><div class="chat-av bot">WR</div><div class="chat-bub bot">Good morning, Brian. You have 142,500 points and 8 qualified stays this year. Gold status, ten nights from Platinum. What can I help you plan today?</div></div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="ci" placeholder="Ask about your next trip, savings, or experiences..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button class="btn-blue" onclick="sendChat()">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── JOURNEYS ── -->
+      <div class="p-view" id="pv-journeys">
+        <h1 class="p-page-title">My Journeys</h1>
+        <p class="p-page-sub">Bundle hotel, flight, car and experiences. Insider members save up to 40% on bundles.</p>
+        <div class="trip-grid">
+          <div class="trip-card"><div class="trip-label">Family Getaway</div><div class="trip-name">Orlando, FL &mdash; 4 nights</div><div class="trip-desc">Hotel + flights + car + Disney 3-day park hopper tickets</div><div class="trip-foot"><div><div class="trip-price-lbl">With Insider</div><div class="trip-price">$2,847</div></div><span class="bdg bdg-green">Save $580</span></div></div>
+          <div class="trip-card"><div class="trip-label">All-Inclusive Escape</div><div class="trip-name">Wyndham Alltra Samana &mdash; 5 nights</div><div class="trip-desc">Hotel + flights + private transfers + full-day excursion</div><div class="trip-foot"><div><div class="trip-price-lbl">With Insider</div><div class="trip-price">$7,215</div></div><span class="bdg bdg-green">Save $851</span></div></div>
+          <div class="trip-card"><div class="trip-label">Cruise Bundle</div><div class="trip-name">Carnival &mdash; 7-day Caribbean</div><div class="trip-desc">Pre-cruise hotel + cruise + shoreside excursions</div><div class="trip-foot"><div><div class="trip-price-lbl">With Insider</div><div class="trip-price">From $1,960</div></div><span class="bdg bdg-green">Up to 40% off</span></div></div>
+          <div class="add-trip" onclick="pView('concierge')"><div style="font-size:26px;color:var(--t3);">+</div><div style="font-size:12px;color:var(--t2);">Plan a journey with AI</div></div>
+        </div>
+      </div>
+
+      <!-- ── EXPERIENCES ── -->
+      <div class="p-view" id="pv-experiences">
+        <h1 class="p-page-title">Experiences</h1>
+        <p class="p-page-sub">Earn 2 points per dollar on Ticketmaster. Redeem 142,500 points on 50,000+ live events. No blackout shows.</p>
+        <div class="evt-list">
+          <div class="evt-row"><div><div class="evt-name">Coldplay &mdash; Music of the Spheres World Tour</div><div class="evt-meta">Rogers Centre, Toronto &middot; Aug 12, 2026</div></div><div class="evt-right"><div class="evt-pts">From 30,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+          <div class="evt-row"><div><div class="evt-name">Toronto Blue Jays vs New York Yankees</div><div class="evt-meta">Rogers Centre &middot; July 18, 2026</div></div><div class="evt-right"><div class="evt-pts">From 8,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+          <div class="evt-row"><div><div class="evt-name">Hamilton &mdash; The Musical</div><div class="evt-meta">CAA Theatre, Toronto &middot; Ongoing 2026</div></div><div class="evt-right"><div class="evt-pts">From 12,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+          <div class="evt-row"><div><div class="evt-name">F1 Canadian Grand Prix &mdash; VIP Package</div><div class="evt-meta">Circuit Gilles Villeneuve, Montreal &middot; June 15</div></div><div class="evt-right"><div class="evt-pts">From 50,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+          <div class="evt-row"><div><div class="evt-name">Sabrina Carpenter &mdash; Short n' Sweet Tour</div><div class="evt-meta">Scotiabank Arena, Toronto &middot; May 30</div></div><div class="evt-right"><div class="evt-pts">From 22,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+          <div class="evt-row"><div><div class="evt-name">PBR World Finals &mdash; VIP Floor Access</div><div class="evt-meta">T-Mobile Arena, Las Vegas &middot; Nov 2026</div></div><div class="evt-right"><div class="evt-pts">From 35,000 pts</div><div class="evt-cta">Redeem</div></div></div>
+        </div>
+      </div>
+
+      <!-- ── CAMPAIGNS ── -->
+      <div class="p-view" id="pv-campaigns">
+        <div class="flex-sb mb-20">
+          <div><h1 class="p-page-title">Campaign Engine</h1><p class="p-page-sub">AI-powered marketing campaigns targeting Wyndham's 120M member base for Insider conversion.</p></div>
+          <button class="btn-gold">+ New Campaign</button>
+        </div>
+        <div class="camp-kpi-grid">
+          <div class="camp-kpi"><div class="camp-kpi-lbl">Active Campaigns</div><div class="camp-kpi-val">4</div><div class="camp-kpi-delta up">+2 this month</div></div>
+          <div class="camp-kpi"><div class="camp-kpi-lbl">Members Reached</div><div class="camp-kpi-val">14.2M</div><div class="camp-kpi-delta up">+8.4% WoW</div></div>
+          <div class="camp-kpi"><div class="camp-kpi-lbl">Avg Conversion</div><div class="camp-kpi-val">3.8%</div><div class="camp-kpi-delta up">+2.8pp vs 1% baseline</div></div>
+          <div class="camp-kpi"><div class="camp-kpi-lbl">Est. ARR Impact</div><div class="camp-kpi-val">$51M</div><div class="camp-kpi-delta up">This campaign cycle</div></div>
+        </div>
+        <div class="camp-table">
+          <div class="camp-thead"><span>Campaign</span><span>Segment</span><span>Reach</span><span>Conv. Rate</span><span>Rev. Impact</span><span>Status</span></div>
+          <div class="camp-row">
+            <div><div class="camp-row-name">Entertainment First</div><div class="camp-row-desc">Ticketmaster + live event audience</div></div>
+            <div class="camp-row-cell"><span class="bdg bdg-blue">Event Seekers</span></div>
+            <div class="camp-row-cell">8.4M</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">4.6%</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">$36.9M</div>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="camp-row">
+            <div><div class="camp-row-name">Family Bundle Push</div><div class="camp-row-desc">Orlando + Disney destination intent</div></div>
+            <div class="camp-row-cell"><span class="bdg bdg-gold">Family Travel</span></div>
+            <div class="camp-row-cell">15.2M</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">3.2%</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">$46.2M</div>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="camp-row">
+            <div><div class="camp-row-name">Road Warrior Upgrade</div><div class="camp-row-desc">5+ stays/year, frequent midweek</div></div>
+            <div class="camp-row-cell"><span class="bdg bdg-green">Frequent</span></div>
+            <div class="camp-row-cell">6.7M</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">5.1%</div>
+            <div class="camp-row-cell" style="color:var(--green);font-weight:600;">$32.4M</div>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="camp-row">
+            <div><div class="camp-row-name">Lapsed Loyalist Win-back</div><div class="camp-row-desc">Inactive 12+ months, high points balance</div></div>
+            <div class="camp-row-cell"><span class="bdg bdg-red">Lapsed</span></div>
+            <div class="camp-row-cell">12.8M</div>
+            <div class="camp-row-cell" style="color:var(--t2);">1.8%</div>
+            <div class="camp-row-cell" style="color:var(--t2);">$21.9M</div>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="camp-row">
+            <div><div class="camp-row-name">Cruise Bundle Offer</div><div class="camp-row-desc">Carnival + redemption history</div></div>
+            <div class="camp-row-cell"><span class="bdg bdg-blue">Cruise Intent</span></div>
+            <div class="camp-row-cell">4.1M</div>
+            <div class="camp-row-cell" style="color:var(--t3);">Proposed</div>
+            <div class="camp-row-cell" style="color:var(--t3);">Est. $14.8M</div>
+            <button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PARTNERS ── -->
+      <div class="p-view" id="pv-partners">
+        <div class="flex-sb mb-20">
+          <div><h1 class="p-page-title">Partnership Hub</h1><p class="p-page-sub">The loyalty ecosystem. Every partner keeps Insider members booking within the platform.</p></div>
+          <button class="btn-gold">+ Add Partner</button>
+        </div>
+        <div class="partner-grid">
+          <!-- TM -->
+          <div class="partner-card">
+            <div class="partner-card-top"><div><div class="partner-brand">Ticketmaster</div><div class="partner-cat">Live Entertainment</div></div><span class="bdg bdg-green">Live</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Events</div><div class="partner-metric-val">50K+</div></div>
+              <div><div class="partner-metric-lbl">Earn Rate</div><div class="partner-metric-val">2 pts/$</div></div>
+              <div><div class="partner-metric-lbl">Monthly Bookings</div><div class="partner-metric-val">142K</div></div>
+              <div><div class="partner-metric-lbl">Rev. Contribution</div><div class="partner-metric-val">$36.9M</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:88%;background:var(--green);"></div></div>
+            <div class="partner-cta">View integration &rarr;</div>
+          </div>
+          <!-- Carnival -->
+          <div class="partner-card">
+            <div class="partner-card-top"><div><div class="partner-brand">Carnival Cruise</div><div class="partner-cat">Ocean Travel</div></div><span class="bdg bdg-green">Active</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Discount</div><div class="partner-metric-val">Up to 40%</div></div>
+              <div><div class="partner-metric-lbl">Earn Rate</div><div class="partner-metric-val">1 pts/$</div></div>
+              <div><div class="partner-metric-lbl">Monthly Bookings</div><div class="partner-metric-val">28K</div></div>
+              <div><div class="partner-metric-lbl">Rev. Contribution</div><div class="partner-metric-val">$22.1M</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:62%;background:var(--gold);"></div></div>
+            <div class="partner-cta">View integration &rarr;</div>
+          </div>
+          <!-- Disney -->
+          <div class="partner-card">
+            <div class="partner-card-top"><div><div class="partner-brand">Walt Disney World</div><div class="partner-cat">Theme Parks</div></div><span class="bdg bdg-green">Active</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Savings</div><div class="partner-metric-val">Exclusive</div></div>
+              <div><div class="partner-metric-lbl">Earn Rate</div><div class="partner-metric-val">10 pts/$</div></div>
+              <div><div class="partner-metric-lbl">Monthly Bookings</div><div class="partner-metric-val">61K</div></div>
+              <div><div class="partner-metric-lbl">Rev. Contribution</div><div class="partner-metric-val">$18.4M</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:74%;background:var(--blue-light);"></div></div>
+            <div class="partner-cta">View integration &rarr;</div>
+          </div>
+          <!-- Air Canada -->
+          <div class="partner-card">
+            <div class="partner-card-top"><div><div class="partner-brand">Air Canada</div><div class="partner-cat">Aviation</div></div><span class="bdg bdg-green">Active</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Flight Discount</div><div class="partner-metric-val">Up to 15%</div></div>
+              <div><div class="partner-metric-lbl">Earn Rate</div><div class="partner-metric-val">1 pts/$</div></div>
+              <div><div class="partner-metric-lbl">Monthly Bookings</div><div class="partner-metric-val">38K</div></div>
+              <div><div class="partner-metric-lbl">Rev. Contribution</div><div class="partner-metric-val">$11.2M</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:54%;background:var(--blue-light);"></div></div>
+            <div class="partner-cta">View integration &rarr;</div>
+          </div>
+          <!-- Live Nation -->
+          <div class="partner-card" style="border-color:var(--gold-border);">
+            <div class="partner-card-top"><div><div class="partner-brand">Live Nation</div><div class="partner-cat">Events + Festivals</div></div><span class="bdg bdg-gold">Proposed</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Events</div><div class="partner-metric-val">30K+</div></div>
+              <div><div class="partner-metric-lbl">Earn Rate</div><div class="partner-metric-val">TBD</div></div>
+              <div><div class="partner-metric-lbl">Est. Reach</div><div class="partner-metric-val">22M fans</div></div>
+              <div><div class="partner-metric-lbl">Est. Rev. Impact</div><div class="partner-metric-val">$28M+</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:30%;background:var(--gold);opacity:0.5;"></div></div>
+            <div class="partner-cta" style="color:var(--gold);">Initiate partnership &rarr;</div>
+          </div>
+          <!-- F1 -->
+          <div class="partner-card" style="border-color:var(--gold-border);">
+            <div class="partner-card-top"><div><div class="partner-brand">Formula 1</div><div class="partner-cat">Premium Motorsport</div></div><span class="bdg bdg-gold">In Discussion</span></div>
+            <div class="partner-metrics">
+              <div><div class="partner-metric-lbl">Races / Year</div><div class="partner-metric-val">24</div></div>
+              <div><div class="partner-metric-lbl">Offering</div><div class="partner-metric-val">VIP Pkgs</div></div>
+              <div><div class="partner-metric-lbl">Audience</div><div class="partner-metric-val">1.5B fans</div></div>
+              <div><div class="partner-metric-lbl">Est. Rev. Impact</div><div class="partner-metric-val">$40M+</div></div>
+            </div>
+            <div class="partner-bar"><div class="partner-bar-fill" style="width:20%;background:var(--red,#DC503C);opacity:0.7;"></div></div>
+            <div class="partner-cta" style="color:var(--gold);">Advance discussions &rarr;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── INTELLIGENCE ── -->
+      <div class="p-view" id="pv-intelligence">
+        <h1 class="p-page-title">Member Intelligence</h1>
+        <p class="p-page-sub">AI-powered segmentation of Wyndham's 120M member base. Identify, target, and convert the highest-probability Insider subscribers.</p>
+        <div class="flex-sb mb-20" style="gap:20px;">
+          <div style="flex:1;">
+            <div class="p-eyebrow mb-8">Member Segments</div>
+            <div class="seg-grid">
+              <div class="seg-card">
+                <div class="seg-card-top"><div class="seg-name">Entertainment Seekers</div><div><div class="seg-size">8.4M</div><div class="seg-size-lbl">members</div></div></div>
+                <div class="seg-desc">Ticketmaster purchase history, concert and sports booking signals, 2+ event searches in past 90 days.</div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:4px;"><span>Conversion probability</span><span style="color:var(--green);font-weight:600;">High</span></div>
+                <div class="seg-bar"><div class="seg-bar-fill" style="width:78%;background:var(--green);"></div></div>
+              </div>
+              <div class="seg-card">
+                <div class="seg-card-top"><div class="seg-name">Family Travelers</div><div><div class="seg-size">15.2M</div><div class="seg-size-lbl">members</div></div></div>
+                <div class="seg-desc">Disney / resort booking patterns, 2+ adults + children in profile, spring/summer travel intent signals.</div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:4px;"><span>Conversion probability</span><span style="color:var(--gold);font-weight:600;">Medium-High</span></div>
+                <div class="seg-bar"><div class="seg-bar-fill" style="width:64%;background:var(--gold);"></div></div>
+              </div>
+              <div class="seg-card">
+                <div class="seg-card-top"><div class="seg-name">Frequent Overnighters</div><div><div class="seg-size">6.7M</div><div class="seg-size-lbl">members</div></div></div>
+                <div class="seg-desc">5+ qualified stays per year, midweek pattern, business destination mix. Gold status acheivers.</div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:4px;"><span>Conversion probability</span><span style="color:var(--green);font-weight:600;">Very High</span></div>
+                <div class="seg-bar"><div class="seg-bar-fill" style="width:86%;background:var(--green);"></div></div>
+              </div>
+              <div class="seg-card">
+                <div class="seg-card-top"><div class="seg-name">Lapsed Loyalists</div><div><div class="seg-size">12.8M</div><div class="seg-size-lbl">members</div></div></div>
+                <div class="seg-desc">Inactive 12+ months, high unredeemed points balance, historically engaged members requiring re-activation.</div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-bottom:4px;"><span>Conversion probability</span><span style="color:var(--t2);font-weight:600;">Medium</span></div>
+                <div class="seg-bar"><div class="seg-bar-fill" style="width:38%;background:var(--blue-light);"></div></div>
+              </div>
+            </div>
+          </div>
+          <div style="width:240px;flex-shrink:0;">
+            <div class="p-eyebrow mb-8">Conversion Funnel</div>
+            <div class="p-card" style="padding:16px;">
+              <div class="arc-row"><span class="arc-stage">Aware of Insider</span><div class="arc-bar"><div class="arc-fill" style="width:100%;background:var(--blue-light);"></div></div><span class="arc-pct">100%</span></div>
+              <div class="arc-row"><span class="arc-stage">Visited landing page</span><div class="arc-bar"><div class="arc-fill" style="width:42%;background:var(--blue-light);"></div></div><span class="arc-pct">42%</span></div>
+              <div class="arc-row"><span class="arc-stage">Viewed ROI calc</span><div class="arc-bar"><div class="arc-fill" style="width:18%;background:var(--gold);"></div></div><span class="arc-pct">18%</span></div>
+              <div class="arc-row"><span class="arc-stage">Reached checkout</span><div class="arc-bar"><div class="arc-fill" style="width:8%;background:var(--gold);"></div></div><span class="arc-pct">8%</span></div>
+              <div class="arc-row"><span class="arc-stage">Converted</span><div class="arc-bar"><div class="arc-fill" style="width:3%;background:var(--green);"></div></div><span class="arc-pct" style="color:var(--green);">3%</span></div>
+            </div>
+            <div class="p-card" style="padding:14px;margin-top:0;">
+              <div class="p-eyebrow mb-8">AI Recommendation</div>
+              <div style="font-size:12px;color:var(--t2);line-height:1.7;">The 18% to 3% drop between ROI viewed and conversion is the critical gap. Personalised follow-up messaging at the 24-hour mark would recover an estimated 60% of drop-offs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /p-content -->
+  </div><!-- /p-body -->
+
+  <div class="p-footer">
+    <div class="p-footer-txt">Wyndham Rewards Insider &nbsp;&middot;&nbsp; Snowstorm Technologies</div>
+    <div class="p-footer-txt">AI strategy &amp; brand layer by Brand-Tastic</div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mnav-item active" onclick="pView('dash')" id="mn-dash">
+      <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/><rect x="9" y="9" width="5.5" height="5.5" rx="1" opacity="0.35"/></svg>
+      Home
+    </button>
+    <button class="mnav-item" onclick="pView('convert')" id="mn-convert">
+      <svg viewBox="0 0 16 16" fill="currentColor"><polygon points="8,1.5 10,6.2 15.2,6.5 11.5,10 12.8,15 8,12.4 3.2,15 4.5,10 0.8,6.5 6,6.2"/></svg>
+      Insider
+      <div class="mnav-pip"></div>
+    </button>
+    <button class="mnav-item" onclick="pView('concierge')" id="mn-concierge">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2" fill="currentColor" stroke="none"/></svg>
+      AI
+    </button>
+    <button class="mnav-item" onclick="pView('journeys')" id="mn-journeys">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14L8 2L14 14"/><line x1="4.5" y1="10" x2="11.5" y2="10"/></svg>
+      Trips
+    </button>
+    <button class="mnav-item" onclick="showMobileMore()" id="mn-more">
+      <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg>
+      More
+    </button>
+  </div>
+
+  <!-- MOBILE MORE DRAWER -->
+  <div id="mobile-more" style="display:none;position:absolute;bottom:56px;left:0;right:0;background:var(--navy-mid);border-top:1px solid var(--border);z-index:60;padding:8px;">
+    <div onclick="pView('experiences');hideMobileMore()" style="padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:6px;color:var(--t2);font-size:13px;" onmouseover="this.style.background='var(--navy-card)'" onmouseout="this.style.background=''">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6.5"/><polygon points="6.5,5.5 11.5,8 6.5,10.5" fill="currentColor" stroke="none"/></svg>
+      Experiences
+    </div>
+    <div onclick="pView('campaigns');hideMobileMore()" style="padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:6px;color:var(--t2);font-size:13px;" onmouseover="this.style.background='var(--navy-card)'" onmouseout="this.style.background=''">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 11 L8 3 L14 11 L11 11 L11 14 L5 14 L5 11 Z"/></svg>
+      Campaign Engine
+    </div>
+    <div onclick="pView('partners');hideMobileMore()" style="padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:6px;color:var(--t2);font-size:13px;" onmouseover="this.style.background='var(--navy-card)'" onmouseout="this.style.background=''">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="5" cy="5" r="2.5"/><circle cx="11" cy="5" r="2.5"/><circle cx="8" cy="11" r="2.5"/></svg>
+      Partnership Hub
+    </div>
+    <div onclick="pView('intelligence');hideMobileMore()" style="padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:6px;color:var(--t2);font-size:13px;" onmouseover="this.style.background='var(--navy-card)'" onmouseout="this.style.background=''">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><path d="M8 5 L8 8 L10.5 10"/></svg>
+      Member Intelligence
+    </div>
+  </div>
+
+</div><!-- /platform -->
+
+<script>
+/* ── LANDING ── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('l-nav');
+  if (document.getElementById('landing').scrollTop > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}, { passive: true });
+document.getElementById('landing').addEventListener('scroll', function() {
+  const nav = document.getElementById('l-nav');
+  if (this.scrollTop > 40) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+function enterPlatform(mode) {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('platform').style.display = 'block';
+  pView(mode === 'new' ? 'convert' : 'dash');
+}
+function exitPlatform() {
+  document.getElementById('platform').style.display = 'none';
+  document.getElementById('landing').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+/* ── PLATFORM NAV ── */
+const viewNames = {
+  'dash':'Dashboard', 'insider':'Insider Benefits', 'convert':'Join Insider',
+  'concierge':'AI Concierge', 'journeys':'My Journeys', 'experiences':'Experiences',
+  'campaigns':'Campaign Engine', 'partners':'Partnership Hub', 'intelligence':'Member Intelligence'
+};
+function pView(name) {
+  document.querySelectorAll('.p-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.p-nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.mnav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('pv-' + name).classList.add('active');
+  document.getElementById('pn-' + name)?.classList.add('active');
+  const mn = document.getElementById('mn-' + name);
+  if (mn) mn.classList.add('active');
+  const bc = document.getElementById('bc-current');
+  if (bc) bc.textContent = viewNames[name] || name;
+  hideMobileMore();
+}
+function showMobileMore() {
+  const d = document.getElementById('mobile-more');
+  d.style.display = d.style.display === 'block' ? 'none' : 'block';
+}
+function hideMobileMore() {
+  const d = document.getElementById('mobile-more');
+  if (d) d.style.display = 'none';
+}
+
+/* ── ROI CALC ── */
+function calcROI() {
+  const n = parseInt(document.getElementById('ns').value);
+  const r = parseInt(document.getElementById('rs').value);
+  document.getElementById('nv').textContent = n;
+  document.getElementById('rv').textContent = '$' + r;
+  const hotel = Math.round(n * r * 0.10);
+  const total = hotel + 65;
+  document.getElementById('hs').textContent = '$' + hotel;
+  document.getElementById('ts').textContent = '$' + total;
+  const pb = Math.ceil(95 / (r * 0.10));
+  const sfx = pb === 1 ? 'st' : pb === 2 ? 'nd' : pb === 3 ? 'rd' : 'th';
+  document.getElementById('pm').textContent = total > 95
+    ? 'Pays back on your ' + pb + sfx + ' night.'
+    : 'Increase your stay frequency to maximise return.';
+}
+
+/* ── AI CHAT ── */
+let chatHistory = [];
+async function sendChat() {
+  const input = document.getElementById('ci');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addBubble(msg, 'usr');
+  chatHistory.push({ role: 'user', content: msg });
+  const typing = addBubble('Thinking...', 'bot');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are the Wyndham Insider AI Concierge, a premium travel assistant inside the Wyndham Rewards Insider platform administered by Snowstorm Technologies. Member profile: Brian, Gold status, 142,500 points, 8 qualified stays this year, splits time between Halifax and Vancouver Canada, not yet an Insider subscriber. Help Brian understand the concrete value of the $95 per year Insider subscription and plan travel. Be financially specific and show real dollar savings. Insider benefits: 10 percent or more off 8,000-plus hotels, auto Gold status plus 50 percent points accelerator, Ticketmaster earn and redeem on 50,000-plus events at 2 points per dollar, up to 40 percent off cruises via bundles, Disney World and SeaWorld savings, white-glove concierge for sold-out events. Keep responses to 3-4 sentences. No bullet points. No em dashes. No exclamation marks. Warm, direct, and financially specific.`,
+        messages: chatHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Unable to load a response.';
+    typing.remove();
+    addBubble(reply, 'bot');
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    typing.remove();
+    addBubble('Connection issue. Please try again.', 'bot');
+  }
+}
+function fire(text) {
+  pView('concierge');
+  setTimeout(() => { document.getElementById('ci').value = text; sendChat(); }, 150);
+}
+function addBubble(text, role) {
+  const msgs = document.getElementById('cm');
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-row' + (role === 'usr' ? ' u' : '');
+  const av = document.createElement('div');
+  av.className = 'chat-av ' + role;
+  av.textContent = role === 'bot' ? 'WR' : 'BF';
+  const bub = document.createElement('div');
+  bub.className = 'chat-bub ' + role;
+  bub.textContent = text;
+  wrap.appendChild(av); wrap.appendChild(bub);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+  return wrap;
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', e => {
+  if (document.activeElement.tagName === 'INPUT') return;
+  const map = {'1':'dash','2':'insider','3':'concierge','4':'journeys','5':'experiences','6':'campaigns','7':'partners','8':'intelligence'};
+  if (map[e.key] && document.getElementById('platform').style.display !== 'none') pView(map[e.key]);
+});
+
+/* ── HERO IMAGE LOADER ── */
+const heroImages = [
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+];
+(function loadHero(idx) {
+  if (idx >= heroImages.length) return;
+  const img = new Image();
+  img.onload = () => {
+    document.querySelector('.hero-bg').style.backgroundImage = `url('${heroImages[idx]}')`;
+  };
+  img.onerror = () => loadHero(idx + 1);
+  img.src = heroImages[idx];
+})(0);
+
+function calcCvROI() {
+  const nights = parseInt(document.getElementById('cv-ns').value);
+  const rate   = parseInt(document.getElementById('cv-rs').value);
+  const events = parseInt(document.getElementById('cv-es').value);
+  const flights = parseInt(document.getElementById('cv-fs').value);
+  document.getElementById('cv-nv').textContent = nights;
+  document.getElementById('cv-rv').textContent = '$' + rate;
+  document.getElementById('cv-ev').textContent = events;
+  document.getElementById('cv-fv').textContent = flights;
+  const hotelSave  = Math.round(nights * rate * 0.10);
+  const eventSave  = Math.round(events * 15);
+  const flightSave = Math.round(flights * 8.75);
+  const total = hotelSave + eventSave + flightSave;
+  document.getElementById('cv-hotel').textContent  = '$' + hotelSave;
+  document.getElementById('cv-events').textContent = '$' + eventSave;
+  document.getElementById('cv-flights').textContent= '$' + flightSave;
+  document.getElementById('cv-total').textContent  = '$' + total;
+  const net = total - 95;
+  const pb  = Math.ceil(95 / (rate * 0.10));
+  const sfx = pb===1?'st':pb===2?'nd':pb===3?'rd':'th';
+  document.getElementById('cv-msg').textContent = net > 0
+    ? 'You come out $' + net + ' ahead after the first year.'
+    : 'Add more stays or events to see your full return.';
+}
+</script>
+</body>
+</html>
