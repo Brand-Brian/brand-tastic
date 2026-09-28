@@ -983,6 +983,8 @@
     transition: background 0.2s;
   }
   .site-nav-cta:hover { background: #FAC775; }
+  .site-nav-ctas { display: flex; gap: 0.5rem; align-items: center; }
+  .site-nav-ctas .site-nav-cta { font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.5rem 0.85rem; white-space: nowrap; }
   .site-nav-hamburger {
     display: none;
     flex-direction: column;
@@ -1024,6 +1026,9 @@
     .site-nav-hamburger { display: flex; }
     .site-nav { padding: 1rem 1.25rem; }
   }
+  @media (max-width: 600px) {
+    .site-nav-ctas { display: none; }
+  }
 
 </style>
 </head>
@@ -1044,7 +1049,10 @@
     <li><a href="#about">About</a></li>
     <li><a href="ai-execution.html">AI Execution</a></li>
   </ul>
-  <a href="/linkedin-audit" class="site-nav-cta">LinkedIn Audit</a>
+  <div class="site-nav-ctas">
+    <a href="https://impartial-money-fa9.notion.site/The-Claude-AI-Visibility-System-4ba9112c6a1f83f3a78901a8ec0a8fe1?source=copy_link" class="site-nav-cta" target="_blank" rel="noopener">AI Visibility System</a>
+    <a href="https://gotcatalyst.com/aeo-audit" class="site-nav-cta" target="_blank" rel="noopener">Free AEO Audit</a>
+  </div>
   <button class="site-nav-hamburger" id="siteNavHam" onclick="toggleSiteNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1054,7 +1062,8 @@
   <a href="#services" onclick="closeSiteNav()">Services</a>
   <a href="#about" onclick="closeSiteNav()">About</a>
   <a href="ai-execution.html" onclick="closeSiteNav()">AI Execution</a>
-  <a href="/linkedin-audit" onclick="closeSiteNav()" style="color:#EF9F27;font-weight:600;">LinkedIn Audit</a>
+  <a href="https://impartial-money-fa9.notion.site/The-Claude-AI-Visibility-System-4ba9112c6a1f83f3a78901a8ec0a8fe1?source=copy_link" target="_blank" rel="noopener" onclick="closeSiteNav()" style="color:#EF9F27;font-weight:600;">AI Visibility System</a>
+  <a href="https://gotcatalyst.com/aeo-audit" target="_blank" rel="noopener" onclick="closeSiteNav()" style="color:#EF9F27;font-weight:600;">Free AEO Audit</a>
 </div>
 
 <!-- HERO -->
