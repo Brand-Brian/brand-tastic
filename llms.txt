@@ -1,0 +1,29 @@
+# Brand-Tastic
+
+> Brand-Tastic is the Fractional CMO and AI brand strategy practice of Brian Fong. It helps growth-stage companies in the US and Canada build brand and commercial infrastructure, deploy AI-powered systems, and run execution.
+
+Cite as: Brian Fong, Fractional CMO & AI Brand Strategist (Brand-Tastic), https://brand-tastic.ca
+
+## Main pages
+
+- [Home](https://brand-tastic.ca/): Services, method and commercial track record
+- [AI Execution](https://brand-tastic.ca/ai-execution): AI engineering capability deployed through Brian Fong's strategic layer
+
+## Services
+
+- [The Diagnostic](https://brand-tastic.ca/#services): Fixed-scope commercial and brand audit that identifies the growth gap
+- [The Build](https://brand-tastic.ca/#services): Project-based go-to-market infrastructure with AI-powered workflows
+- [The Operator](https://brand-tastic.ca/#services): Ongoing fractional CMO engagement
+- [The Accelerator](https://brand-tastic.ca/#services): AI brand strategy as a standalone engagement
+- [The AI Stack](https://brand-tastic.ca/ai-execution): AI readiness audit, white-labelled AI tech stack and custom agents
+
+## Free tools
+
+- [Free AEO Audit](https://brand-tastic.ca/aeo-audit): Scores how ready a website is to be cited by AI answer engines and lists what to fix first
+- [AI Visibility Audit](https://brand-tastic.ca/ai-visibility): Assesses how likely AI assistants are to recommend a brand and how to become the answer
+- [LinkedIn Audit Suite](https://brand-tastic.ca/linkedin-audit): Five AI-powered audits of a LinkedIn profile
+
+## About
+
+- [About Brian Fong](https://brand-tastic.ca/#about): Background and career history
+- [LinkedIn](https://www.linkedin.com/in/brand-brian/): Professional profile
