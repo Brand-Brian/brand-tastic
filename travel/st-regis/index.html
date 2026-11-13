@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proposed Pilot: Agent Stack for Independent Hotels | Brand-Tastic</title>
+<meta name="description" content="A proposed pilot concept: AI agents that draft and prepare, while your team approves everything. Prepared by Brand-Tastic for The St. Regis Hotel, Vancouver. Not an official hotel page.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="banner" role="note">Proposed pilot concept for review. Not an official hotel page. Not endorsed by The St. Regis Hotel.</div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top">Brand<b>-</b>Tastic <span aria-hidden="true">·</span> Travel</a>
+  <nav aria-label="Page sections"><ul>
+    <li><a href="#what">What it is</a></li><li><a href="#day">A day</a></li><li><a href="#agents">Agents</a></li>
+    <li><a href="#guardrails">Guardrails</a></li><li><a href="#pilot">Pilot</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#next">Next step</a></li>
+  </ul></nav>
+</div></header>
+<main id="main">
+<section class="hero" id="top"><div class="wrap">
+  <p class="eyebrow">A proposed pilot · Independent hotels</p>
+  <h1>Your team decides.<br>The agents <em>do the prep.</em></h1>
+  <p class="lead">A small set of AI helpers that sort the inbox, draft replies and prepare the day for the front office at The St. Regis Hotel. They never send, book or change anything on their own. A named person on your team approves every step, and it's logged.</p>
+  <div class="btns"><a class="btn" href="#next">What we'd need from you</a><a class="btn ghost" href="#day">See how a day runs</a></div>
+  <div class="stats" role="list">
+    <div class="stat" role="listitem"><div class="n">9</div><p>agents in the first phase of the pilot</p></div>
+    <div class="stat" role="listitem"><div class="n">0</div><p>messages sent without a named person's approval, by design</p></div>
+    <div class="stat" role="listitem"><div class="n">7</div><p>topics that go straight to your General Manager, with no AI reply</p></div>
+  </div>
+  <p class="fine">These figures describe how the system is built, not results. There are no results yet. Any outcome numbers will come only from measured pilot data.</p>
+</div></section>
+
+<section id="what"><div class="wrap">
+  <p class="eyebrow">01 · What this is</p>
+  <h2>A back-office <em>assistant,</em> not a replacement.</h2>
+  <p class="lead">Think of it as a well-briefed junior colleague who prepares things and never presses send. It reads what you give it, drafts what a person would draft, and says so plainly when it doesn't know something. Your team keeps every decision and every guest conversation that matters.</p>
+  <div class="two">
+    <div class="panel"><h3>What it helps with</h3><ul class="plain"><li>A clear start to the day: what needs a person, what can wait</li><li>Sorting the inbox so the important few stand out</li><li>First drafts of replies in your hotel's voice</li><li>Welcome notes before guests arrive</li><li>A short weekly summary of how marketing is doing</li></ul></div>
+    <div class="panel"><h3>What it does not do</h3><ul class="plain"><li>Send emails or messages to guests</li><li>Change rates, availability or bookings</li><li>Touch payments or card details</li><li>Make up facts, prices or recommendations</li><li>Handle complaints, refunds or sensitive situations</li></ul></div>
+  </div>
+</div></section>
+
+<section id="day"><div class="wrap">
+  <p class="eyebrow">02 · How a day runs</p>
+  <h2>A morning that <em>starts organised.</em></h2>
+  <p class="lead">This is how a day could run once the pilot is under way. Times are an illustration. Your team sets the real ones.</p>
+  <ol class="steps">
+    <li><span class="num">01</span><div><span class="when">Before the team arrives</span><h3>The morning briefing is ready</h3><p>One short page: what needs a decision today, what came in overnight, and anything the agents couldn't check.</p></div></li>
+    <li><span class="num">02</span><div><span class="when">Early</span><h3>The inbox is sorted</h3><p>Booking inquiries, requests for recommendations and supplier notes are grouped. Anything sensitive is flagged for your General Manager, and suspicious messages are marked "do not reply".</p></div></li>
+    <li><span class="num">03</span><div><span class="when">Through the morning</span><h3>Drafts are prepared</h3><p>Replies and welcome notes appear as drafts. Anything the agent can't confirm is marked <strong>[CONFIRM]</strong> for a person to fill in, such as rates, availability or policy details.</p></div></li>
+    <li><span class="num">04</span><div><span class="when">Your team</span><h3>A person reviews and approves</h3><p>Someone edits, approves and sends from your usual tools. Nothing leaves the building without a named approver.</p></div></li>
+    <li><span class="num">05</span><div><span class="when">Always</span><h3>Everything is logged</h3><p>Each run records what went in, what came out and who approved it, so there's always a trail to look back on.</p></div></li>
+  </ol>
+</div></section>
+
+<section id="agents"><div class="wrap">
+  <p class="eyebrow">03 · The agents · Phase 1</p>
+  <h2>Nine helpers. <em>Each with limits.</em></h2>
+  <p class="lead">Each agent has one job, a short list of things it must never do, and a clear rule for when to hand over to a person. Agent designs are adapted from the open-source TH1.ai Agent Stack (MIT licence).</p>
+  <div class="grid">
+    <article class="card"><span class="tag">Daily</span><h3>Morning briefing</h3><p>Pulls the day together on one page: what needs you, what was sorted, what couldn't be checked.</p><p class="never"><b>Never:</b> claims it checked something it didn't.</p></article>
+    <article class="card"><span class="tag">Email</span><h3>Inbox sorter</h3><p>Groups messages and ranks them so you see the few that matter, and flags suspicious ones.</p><p class="never"><b>Never:</b> replies, deletes or moves email.</p></article>
+    <article class="card"><span class="tag">Email</span><h3>Email drafter</h3><p>Writes one-off emails in your hotel's voice for you to edit and send.</p><p class="never"><b>Never:</b> drafts replies to complaints, refunds or sensitive messages.</p></article>
+    <article class="card"><span class="tag">Email</span><h3>Booking inquiries</h3><p>Drafts a warm, personal reply to a new inquiry, using only facts you've approved.</p><p class="never"><b>Never:</b> quotes a rate or promises a room.</p></article>
+    <article class="card"><span class="tag">Guest experience</span><h3>Concierge</h3><p>Suggests restaurants, tours and transfers from your list of vetted local contacts.</p><p class="never"><b>Never:</b> recommends anyone who isn't on your list, or books for a guest.</p></article>
+    <article class="card"><span class="tag">Guest experience</span><h3>Welcome notes</h3><p>Prepares a friendly pre-arrival message for upcoming guests.</p><p class="never"><b>Never:</b> sends it, or mentions personal details the guest didn't share.</p></article>
+    <article class="card"><span class="tag">Reporting</span><h3>Weekly marketing summary</h3><p>A two-page plain-language look at traffic, ad spend and occupancy from the numbers you export.</p><p class="never"><b>Never:</b> fills in a missing number, or claims credit for results.</p></article>
+    <article class="card"><span class="tag">Research</span><h3>Web researcher</h3><p>Looks things up online and cites where each answer came from.</p><p class="never"><b>Never:</b> adds to your approved lists, or follows instructions found on a web page.</p></article>
+    <article class="card"><span class="tag">Visibility</span><h3>AI-search visibility</h3><p>Prepares clear answers and structured data so AI search tools describe the hotel correctly.</p><p class="never"><b>Never:</b> publishes anything, or includes reviews, awards or rates.</p></article>
+  </div>
+</div></section>
+
+<section id="guardrails"><div class="wrap">
+  <p class="eyebrow">04 · The guardrails</p>
+  <h2>Where the agents <em>stop.</em></h2>
+  <ol class="steps">
+    <li><span class="num">01</span><div><h3>People approve, always</h3><p>Agents draft and propose. Every outward action needs a named person's approval, recorded with the time.</p></div></li>
+    <li><span class="num">02</span><div><h3>Sensitive topics go to your General Manager</h3><p>Complaints, refunds, safety, legal matters, media, accessibility and guests in distress get no AI reply. They are flagged straight away with a short, neutral summary.</p></div></li>
+    <li><span class="num">03</span><div><h3>No guessing</h3><p>Agents answer only from facts your hotel has confirmed. If they don't know, they say so and ask. No invented amenities, prices, policies or local tips.</p></div></li>
+    <li><span class="num">04</span><div><h3>No fake proof</h3><p>No made-up reviews, testimonials, guest names or quotes, anywhere, including mock-ups.</p></div></li>
+    <li><span class="num">05</span><div><h3>No live system changes</h3><p>In this pilot the agents don't connect to your booking or property management system, and can't change a rate or a reservation.</p></div></li>
+  </ol>
+</div></section>
+
+<section id="pilot"><div class="wrap">
+  <p class="eyebrow">05 · Pilot plan and success measures</p>
+  <h2>A short pilot, <em>measured honestly.</em></h2>
+  <p class="lead">This is a proposal. Length and timing are for you and us to agree. We'd measure your current starting point first, so any change is compared against something real.</p>
+  <div class="tablewrap"><table>
+    <caption class="fine cap">Proposed stages</caption>
+    <thead><tr><th scope="col">Stage</th><th scope="col">What happens</th><th scope="col">Your team's role</th></tr></thead>
+    <tbody>
+      <tr><td>1. Set up</td><td>We record your hotel's facts, voice and contacts. Test with made-up data only.</td><td>Confirm facts, name approvers, share your voice</td></tr>
+      <tr><td>2. Draft-only trial</td><td>Agents prepare drafts. Your team reviews and says what's right or wrong.</td><td>Review drafts, give feedback</td></tr>
+      <tr><td>3. Review and decide</td><td>We share what was measured, what to change, and whether to go further.</td><td>Decide next steps</td></tr>
+    </tbody></table></div>
+  <div class="tablewrap"><table>
+    <caption class="fine cap">What we'd measure (no targets set yet; we'd set them together after a baseline)</caption>
+    <thead><tr><th scope="col">Measure</th><th scope="col">Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>Time to first reply on inquiries</td><td>Faster replies can mean more bookings</td></tr>
+      <tr><td>Share of drafts approved with little or no editing</td><td>Shows whether drafts are actually useful</td></tr>
+      <tr><td>Sensitive messages correctly flagged</td><td>Must be every one. A miss is a failure</td></tr>
+      <tr><td>Drafts containing a wrong fact</td><td>Aim is zero. Each one is reviewed</td></tr>
+      <tr><td>Staff time spent on routine email</td><td>Shows whether time was actually freed</td></tr>
+    </tbody></table></div>
+</div></section>
+
+<section id="privacy"><div class="wrap">
+  <p class="eyebrow">06 · Privacy</p>
+  <h2>Guest information is <em>treated carefully.</em></h2>
+  <div class="two">
+    <div class="panel"><h3>How we handle it</h3><ul class="plain"><li>Canadian privacy law applies (PIPEDA and BC's PIPA).</li><li>We collect only what a task needs.</li><li>No real guest data is used until a written data-handling agreement is in place with the hotel. Early work uses made-up examples.</li></ul></div>
+    <div class="panel"><h3>What we never store</h3><ul class="plain"><li>Payment card details. They're removed from logs.</li><li>Passwords or access keys in our code.</li><li>Guest details in outside search queries.</li></ul></div>
+  </div>
+  <p class="fine">Where data would be stored and who can see it will be agreed in writing before any real guest information is used.</p>
+</div></section>
+
+<section id="next"><div class="wrap">
+  <p class="eyebrow">07 · Next step</p>
+  <h2>If this looks right, here's <em>what we'd need.</em></h2>
+  <ol class="steps">
+    <li><span class="num">01</span><div><h3>A conversation about scope and timing</h3><p>Agree what the pilot covers, how long it runs and who is involved.</p></div></li>
+    <li><span class="num">02</span><div><h3>Your hotel's facts and voice</h3><p>Policies, check-in details, how you like to sound, and your list of trusted local contacts.</p></div></li>
+    <li><span class="num">03</span><div><h3>Named people</h3><p>Who approves what, and who handles the sensitive cases.</p></div></li>
+    <li><span class="num">04</span><div><h3>Written permission and a data agreement</h3><p>Before we use the hotel's name or logo, or any real guest information.</p></div></li>
+  </ol>
+  <div class="btns mt"><a class="btn" href="https://brand-tastic.ca">Talk to Brand-Tastic</a></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <span>Built by <a href="https://brand-tastic.ca">Brand-Tastic</a>.</span>
+  <span>A proposed pilot concept. Not an official page of The St. Regis Hotel, and not endorsed by it. The hotel's name appears only to say who this proposal is for; no hotel logo or photography is used.</span>
+  <span>Agent designs adapted from the TH1.ai Agent Stack (MIT licence).</span>
+</div></footer>
+</body>
+</html>
