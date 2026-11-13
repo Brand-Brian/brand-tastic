@@ -15,7 +15,7 @@
   <a class="brand" href="#top">Brand<b>-</b>Tastic <span aria-hidden="true">·</span> Travel</a>
   <nav aria-label="Page sections"><ul>
     <li><a href="#what">What it is</a></li><li><a href="#day">A day</a></li><li><a href="#agents">Agents</a></li>
-    <li><a href="#guardrails">Guardrails</a></li><li><a href="#pilot">Pilot</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#next">Next step</a></li>
+    <li><a href="#package">Package</a></li><li><a href="#guardrails">Guardrails</a></li><li><a href="#pilot">Pilot</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#next">Next step</a></li>
   </ul></nav>
 </div></header>
 <main id="main">
@@ -57,7 +57,7 @@
 
 <section id="agents"><div class="wrap">
   <p class="eyebrow">03 · The agents · Phase 1</p>
-  <h2>Nine helpers. <em>Each with limits.</em></h2>
+  <h2>Nine helpers to start. <em>Each with limits.</em></h2>
   <p class="lead">Each agent has one job, a short list of things it must never do, and a clear rule for when to hand over to a person. Agent designs are adapted from the open-source TH1.ai Agent Stack (MIT licence).</p>
   <div class="grid">
     <article class="card"><span class="tag">Daily</span><h3>Morning briefing</h3><p>Pulls the day together on one page: what needs you, what was sorted, what couldn't be checked.</p><p class="never"><b>Never:</b> claims it checked something it didn't.</p></article>
@@ -72,8 +72,37 @@
   </div>
 </div></section>
 
+<section id="package"><div class="wrap">
+  <p class="eyebrow">04 · The whole package</p>
+  <h2>Phase 1 is the start. <em>Here's the full picture.</em></h2>
+  <p class="lead">The nine agents above are the first step. The rest are offered as later stages, each one opened up only when the hotel is ready and has agreed to it. <strong>The later stages are a proposal. They are not built or connected to any system yet,</strong> and each one would be fitted to the hotel's own booking and property systems.</p>
+  <h3 class="stage-h"><span class="eyebrow">Stage 2a · Read-only data</span><br>They look. They don't change anything.</h3>
+  <p class="lead">Needs a written data-handling agreement and read-only access to reservations and email.</p>
+  <div class="grid">
+    <article class="card"><span class="tag">Guest experience</span><h3>Arrival-time check</h3><p>Spots upcoming arrivals with no arrival time and drafts a polite note to ask.</p><p class="never"><b>Needs:</b> read access to reservations.</p><p class="never" ><b>Never:</b> sends the note, or contacts a guest.</p></article>
+    <article class="card"><span class="tag">Housekeeping</span><h3>Daily housekeeping plan</h3><p>Prepares a draft room plan from the day's arrivals and departures.</p><p class="never"><b>Needs:</b> read access to reservations.</p><p class="never" ><b>Never:</b> changes a room's status or assigns staff.</p></article>
+    <article class="card"><span class="tag">Reporting</span><h3>Hotel analytics</h3><p>A read-only summary of occupancy and revenue so performance is clear at a glance.</p><p class="never"><b>Needs:</b> read access to reservation reports.</p><p class="never" ><b>Never:</b> edits data, or fills in a number it doesn't have.</p></article>
+    <article class="card"><span class="tag">Email</span><h3>Continuous email drafting</h3><p>Keeps drafting replies through the day so nothing waits. A person approves each one.</p><p class="never"><b>Needs:</b> read access to the inbox.</p><p class="never" ><b>Never:</b> sends anything.</p></article>
+  </div>
+  <h3 class="stage-h"><span class="eyebrow">Stage 2b · Prepares proposals</span><br>They propose. A person decides and applies.</h3>
+  <p class="lead">Needs sign-off from whoever owns revenue and sales, and access to the relevant systems.</p>
+  <div class="grid">
+    <article class="card"><span class="tag">Revenue</span><h3>Rate proposals</h3><p>Proposes rate and minimum-stay changes for the next 30 days, with the reasoning shown.</p><p class="never"><b>Needs:</b> revenue sign-off and channel or booking system access.</p><p class="never" ><b>Never:</b> applies a rate or changes availability.</p></article>
+    <article class="card"><span class="tag">Revenue</span><h3>Upgrade offers</h3><p>Finds upgrade opportunities and prepares the offer and the room move for a person to approve.</p><p class="never"><b>Needs:</b> reservation access and your upgrade rules.</p><p class="never" ><b>Never:</b> moves a guest or sends an offer.</p></article>
+    <article class="card"><span class="tag">Sales</span><h3>Sales pipeline</h3><p>Tracks corporate and group inquiries from first contact on, and drafts follow-ups for ones going quiet.</p><p class="never"><b>Needs:</b> a CRM or shared sheet, and a data agreement.</p><p class="never" ><b>Never:</b> contacts anyone on its own.</p></article>
+    <article class="card"><span class="tag">Partners</span><h3>Partner alerts</h3><p>Where the hotel works with travel partners, drafts a note when rates or availability move.</p><p class="never"><b>Needs:</b> your partner list. Only useful if you have partners to notify.</p><p class="never" ><b>Never:</b> sends the note.</p></article>
+  </div>
+  <h3 class="stage-h"><span class="eyebrow">Stage 3 · Money records and food</span><br>Handled last, with the most care.</h3>
+  <p class="lead">Needs finance access and a stricter data agreement. Breakfast planning applies only if the hotel prepares breakfast itself.</p>
+  <div class="grid">
+    <article class="card"><span class="tag">Finance</span><h3>Receipt filing</h3><p>Reads receipts and invoices and prepares them for filing and month-end.</p><p class="never"><b>Needs:</b> finance access and a stricter data agreement.</p><p class="never" ><b>Never:</b> pays, approves or moves money.</p></article>
+    <article class="card"><span class="tag">Food and beverage</span><h3>Breakfast planning</h3><p>If breakfast is prepared in-house, turns expected guest numbers into a draft shopping list.</p><p class="never"><b>Needs:</b> guest counts and your inventory list.</p><p class="never" ><b>Never:</b> places an order.</p></article>
+  </div>
+  <p class="fine">Every later agent follows the same guardrails as Phase 1: drafts and proposals only, a named person approves, sensitive topics go to the General Manager, and everything is logged.</p>
+</div></section>
+
 <section id="guardrails"><div class="wrap">
-  <p class="eyebrow">04 · The guardrails</p>
+  <p class="eyebrow">05 · The guardrails</p>
   <h2>Where the agents <em>stop.</em></h2>
   <ol class="steps">
     <li><span class="num">01</span><div><h3>People approve, always</h3><p>Agents draft and propose. Every outward action needs a named person's approval, recorded with the time.</p></div></li>
@@ -85,7 +114,7 @@
 </div></section>
 
 <section id="pilot"><div class="wrap">
-  <p class="eyebrow">05 · Pilot plan and success measures</p>
+  <p class="eyebrow">06 · Pilot plan and success measures</p>
   <h2>A short pilot, <em>measured honestly.</em></h2>
   <p class="lead">This is a proposal. Length and timing are for you and us to agree. We'd measure your current starting point first, so any change is compared against something real.</p>
   <div class="tablewrap"><table>
@@ -109,7 +138,7 @@
 </div></section>
 
 <section id="privacy"><div class="wrap">
-  <p class="eyebrow">06 · Privacy</p>
+  <p class="eyebrow">07 · Privacy</p>
   <h2>Guest information is <em>treated carefully.</em></h2>
   <div class="two">
     <div class="panel"><h3>How we handle it</h3><ul class="plain"><li>Canadian privacy law applies (PIPEDA and BC's PIPA).</li><li>We collect only what a task needs.</li><li>No real guest data is used until a written data-handling agreement is in place with the hotel. Early work uses made-up examples.</li></ul></div>
@@ -119,7 +148,7 @@
 </div></section>
 
 <section id="next"><div class="wrap">
-  <p class="eyebrow">07 · Next step</p>
+  <p class="eyebrow">08 · Next step</p>
   <h2>If this looks right, here's <em>what we'd need.</em></h2>
   <ol class="steps">
     <li><span class="num">01</span><div><h3>A conversation about scope and timing</h3><p>Agree what the pilot covers, how long it runs and who is involved.</p></div></li>

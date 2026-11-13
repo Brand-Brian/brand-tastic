@@ -43,3 +43,4 @@ footer{padding:48px 0;color:var(--muted);font-size:.85rem}footer .wrap{display:f
 @media(min-width:760px){.two{grid-template-columns:1fr 1fr}section{padding:104px 0}.hero{padding:96px 0 104px}.wrap{padding:0 40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .cap{text-align:left;caption-side:top}.mt{margin-top:2rem}
+.stage-h{margin:3rem 0 0;font-size:1.6rem}.stage-h .eyebrow{margin:0 0 .5rem;display:inline-block}
